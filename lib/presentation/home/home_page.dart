@@ -3,28 +3,28 @@ import 'package:aro_monitoring/presentation/data/data_page.dart';
 import 'package:aro_monitoring/presentation/data/widgets/monitoring_list.dart';
 import 'package:flutter/material.dart';
 
-class MyHomePage extends StatefulWidget {
+class HomePage extends StatefulWidget {
   final String title;
   final DepObjects depObjects;
   ///
-  const MyHomePage({
+  const HomePage({
     super.key, 
     required this.title,
     required this.depObjects,
   });
   ///
   @override
-  State<MyHomePage> createState() => _MyHomePageState(
+  State<HomePage> createState() => _HomePageState(
     depObjects: depObjects,
   );
 }
 
 ///
-class _MyHomePageState extends State<MyHomePage> {
+class _HomePageState extends State<HomePage> {
   final DepObjects _depObjects;
   late List<String> _depList;
   ///
-  _MyHomePageState({
+  _HomePageState({
     required DepObjects depObjects,
   }) : 
     _depObjects = depObjects;

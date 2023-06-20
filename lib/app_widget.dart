@@ -16,7 +16,7 @@ class MyApp extends StatelessWidget {
         primarySwatch: Colors.blue,
         visualDensity: VisualDensity.adaptivePlatformDensity,
       ),
-      home: const MyHomePage(
+      home: const HomePage(
         title: 'Мониторинг АРО',
         depObjects: DepObjects(
           sqlQuery: SqlQuery(sql: 'Some real sql query to get required data'),
