@@ -1,3 +1,7 @@
+class DoData {
+  ///
+}
+
 List<Map<String, dynamic>> generateData({int n = 10}) {
   return _data;
 }
