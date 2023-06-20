@@ -1,3 +1,5 @@
+class Do
+
 const List<String> doList = [
   'Все ДО',
   'ГПН-Восток',
