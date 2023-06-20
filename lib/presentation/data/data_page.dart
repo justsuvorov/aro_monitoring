@@ -133,7 +133,9 @@ class _DataPageState extends State<DataPage> {
     MaterialPageRoute(
       builder: (context) => const MyHomePage(
         title: 'Мониторинг АРО',
-        depObjects: doList,
+        depObjects: DepObjects(
+          sqlQuery: SqlQuery(sql: 'Some real sql query to get required data'),
+        ),
       ),
     ),
   );},
