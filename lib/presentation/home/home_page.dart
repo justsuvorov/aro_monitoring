@@ -19,16 +19,12 @@ class HomePage extends StatelessWidget {
     return Scaffold(
       appBar: AppBar(
         backgroundColor: Colors.blueAccent,
+        leading: const IconButton(
+          icon: Icon(null),
+          onPressed: null,
+        ),
         title: Text(_title, style: const TextStyle(fontFamily: 'GPN_DIN', fontSize: 32),),
-        actions: <Widget>[
-          IconButton(
-            icon: const Icon(Icons.home),
-            tooltip: 'Главная страница',
-            onPressed: () {
-              // TODO route to be implemented
-            },
-          ),
-        ],
+        // actions: [],
       ),
       body: HomeBody(
         depObjects: _depObjects,
