@@ -7,7 +7,8 @@ class Companies {
     required SqlQuery sqlQuery,
   }) :
     _sqlQuery = sqlQuery;
-  
+  ///
+  /// returns all stored companies
   Map<String, String> all() {
     if (_sqlQuery.valid()) {
       _sqlQuery.build();
@@ -17,6 +18,9 @@ class Companies {
   }  
 }
 
+/// 
+/// temporary representations of the databases data
+/// TODO to be deleted after database is connected
 Map<String, String> _companyNames = {
   'Арчинское': 'ГПН-Восток',
   'Западно-Лугинецкое': 'ГПН-Восток',
