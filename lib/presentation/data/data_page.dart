@@ -14,7 +14,7 @@ class DataPage extends StatefulWidget {
   const DataPage({Key? key}) : super(key: key);
   ///
   @override
-  _DataPageState createState() => _DataPageState();
+  State<DataPage> createState() => _DataPageState();
 }
 ///
 ///
@@ -63,12 +63,12 @@ class _DataPageState extends State<DataPage> {
 
   _resetData({start = 0}) async {
     setState(() => _isLoading = true);
-    var _expandedLen =
+    var expandedLen =
         _total - start < _currentPerPage! ? _total - start : _currentPerPage;
     Future.delayed(const Duration(seconds: 0)).then((value) {
-      _expanded = List.generate(_expandedLen as int, (index) => false);
+      _expanded = List.generate(expandedLen as int, (index) => false);
       _source.clear();
-      _source = _sourceFiltered.getRange(start, start + _expandedLen).toList();
+      _source = _sourceFiltered.getRange(start, start + expandedLen).toList();
       setState(() => _isLoading = false);
     });
   }
@@ -89,11 +89,11 @@ class _DataPageState extends State<DataPage> {
       }
 
       _total = _sourceFiltered.length;
-      var _rangeTop = _total < _currentPerPage! ? _total : _currentPerPage!;
-      _expanded = List.generate(_rangeTop, (index) => false);
-      _source = _sourceFiltered.getRange(0, _rangeTop).toList();
+      var rangeTop = _total < _currentPerPage! ? _total : _currentPerPage!;
+      _expanded = List.generate(rangeTop, (index) => false);
+      _source = _sourceFiltered.getRange(0, rangeTop).toList();
     } catch (e) {
-      print(e);
+      log.warning('._filterData | error: e');
     }
     setState(() => _isLoading = false);
   }

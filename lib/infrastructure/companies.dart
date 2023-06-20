@@ -1,4 +1,4 @@
-Map<String, String> company_names = {
+Map<String, String> companyNames = {
   'Арчинское': 'ГПН-Восток',
   'Западно-Лугинецкое': 'ГПН-Восток',
   'Крапивинское': 'ГПН-Восток',

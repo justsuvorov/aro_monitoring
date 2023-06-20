@@ -12,15 +12,15 @@ class MonitoringList extends StatefulWidget {
   ///
   const MonitoringList({Key? key}) : super(key: key);
   @override
-  _MonitoringListState createState() => _MonitoringListState();
+  State<MonitoringList> createState() => _MonitoringListState();
 }
 ///
 ///
 class _MonitoringListState extends State<MonitoringList> {
     final log = Logger('_MonitoringListState');
-  late List<DatatableHeader> _headers;
+  // late List<DatatableHeader> _headers;
 
-  List<int> _perPages = [10, 20, 50, 100];
+  final List<int> _perPages = [10, 20, 50, 100];
   int _total = 100;
   int? _currentPerPage = 10;
   List<bool>? _expanded;
@@ -28,17 +28,17 @@ class _MonitoringListState extends State<MonitoringList> {
 
   int _currentPage = 1;
   bool _isSearch = false;
-  List<Map<String, dynamic>> _sourceOriginal = [];
+  final List<Map<String, dynamic>> _sourceOriginal = [];
   List<Map<String, dynamic>> _sourceFiltered = [];
   List<Map<String, dynamic>> _source = [];
   List<Map<String, dynamic>> _selecteds = [];
   // ignore: unused_field
-  String _selectableKey = "id";
+  final String _selectableKey = "id";
 
   String? _sortColumn;
   bool _sortAscending = true;
   bool _isLoading = true;
-  bool _showSelect = true;
+  final bool _showSelect = true;
   final random = Random();
 
   List<Map<String, dynamic>> _generateData({int n = 10}) {
@@ -87,12 +87,12 @@ class _MonitoringListState extends State<MonitoringList> {
 
   _resetData({start = 0}) async {
     setState(() => _isLoading = true);
-    var _expandedLen =
+    var expandedLen =
         _total - start < _currentPerPage! ? _total - start : _currentPerPage;
     Future.delayed(const Duration(seconds: 0)).then((value) {
-      _expanded = List.generate(_expandedLen as int, (index) => false);
+      _expanded = List.generate(expandedLen as int, (index) => false);
       _source.clear();
-      _source = _sourceFiltered.getRange(start, start + _expandedLen).toList();
+      _source = _sourceFiltered.getRange(start, start + expandedLen).toList();
       setState(() => _isLoading = false);
     });
   }
@@ -113,9 +113,9 @@ class _MonitoringListState extends State<MonitoringList> {
       }
 
       _total = _sourceFiltered.length;
-      var _rangeTop = _total < _currentPerPage! ? _total : _currentPerPage!;
-      _expanded = List.generate(_rangeTop, (index) => false);
-      _source = _sourceFiltered.getRange(0, _rangeTop).toList();
+      var rangeTop = _total < _currentPerPage! ? _total : _currentPerPage!;
+      _expanded = List.generate(rangeTop, (index) => false);
+      _source = _sourceFiltered.getRange(0, rangeTop).toList();
     } catch (e) {
       log.warning('._filterData | error: $e');
     }
@@ -125,84 +125,6 @@ class _MonitoringListState extends State<MonitoringList> {
   @override
   void initState() {
     super.initState();
-
-    /// set headers
-    _headers = [
-      DatatableHeader(
-          text: "№",
-          value: "id",
-          show: true,
-          sortable: true,
-          textAlign: TextAlign.center),
-      DatatableHeader(
-          text: "id АРО",
-          value: "id_aro",
-          show: true,
-          sortable: true,
-          textAlign: TextAlign.center),
-      DatatableHeader(
-          text: "Тип объекта",
-          value: "obj_type",
-          show: true,
-          flex: 2,
-          sortable: true,
-          textAlign: TextAlign.left,),
-      DatatableHeader(
-          text: "Скважина",
-          value: "well_name",
-          show: true,
-          sortable: true,
-          textAlign: TextAlign.center),
-      DatatableHeader(
-          text: "Куст",
-          value: "well_group_name",
-          show: true,
-          sortable: true,
-          textAlign: TextAlign.left),
-      DatatableHeader(
-          text: "Объект подготовки",
-          value: "preparation_obj_name",
-          show: true,
-          sortable: true,
-          textAlign: TextAlign.left),
-      DatatableHeader(
-          text: "Месторождение",
-          value: "field_name",
-          show: true,
-          sortable: true,
-          textAlign: TextAlign.left),
-      DatatableHeader(
-          text: "ДО",
-          value: "company_name",
-          show: true,
-          sortable: true,
-          textAlign: TextAlign.left),
-      DatatableHeader(
-          text: "Дата внесения",
-          value: "date_creation",
-          show: true,
-          editable: true,
-          sortable: false,
-          textAlign: TextAlign.center),
-     
-      DatatableHeader(
-          text: "Статус",
-          value: "status",
-          show: true,
-          editable: true,
-          sortable: false,
-          textAlign: TextAlign.center),    
-      DatatableHeader(
-          text: "Статус МЭР",
-          value: "status_mer",
-          show: true,
-          editable: true,
-          sortable: false,
-          textAlign: TextAlign.center,        
-          ),
-      
-    ];
-
     _initializeData();
   }
 
@@ -268,16 +190,15 @@ class _MonitoringListState extends State<MonitoringList> {
                     icon: const Icon(Icons.add),
                     label: const Text("new item"),
                   ),
-                  reponseScreenSizes: [ScreenSize.xs],
+                  reponseScreenSizes: const [ScreenSize.xs],
                   actions: [
                     if (_isSearch)
                       Expanded(
                           child: TextField(
                         decoration: InputDecoration(
-                            hintText: 'Enter search term based on ' +
-                                _searchKey!
-                                    .replaceAll(new RegExp('[\\W_]+'), ' ')
-                                    .toUpperCase(),
+                            hintText: 'Enter search term based on ${_searchKey!
+                                    .replaceAll(RegExp('[\\W_]+'), ' ')
+                                    .toUpperCase()}',
                             prefixIcon: IconButton(
                                 icon: const Icon(Icons.cancel),
                                 onPressed: () {
@@ -285,13 +206,17 @@ class _MonitoringListState extends State<MonitoringList> {
                                     _isSearch = false;
                                   });
                                   _initializeData();
-                                }),
+                                },),
                             suffixIcon: IconButton(
-                                icon: const Icon(Icons.search), onPressed: () {})),
+                                icon: const Icon(Icons.search), onPressed: () {
+                                  // TODO onPressed to be implemented...
+                                },
+                            ),
+                        ),
                         onSubmitted: (value) {
                           _filterData(value);
                         },
-                      )),
+                      ),),
                     if (!_isSearch)
                       IconButton(
                           icon: const Icon(Icons.search),
@@ -299,7 +224,7 @@ class _MonitoringListState extends State<MonitoringList> {
                             setState(() {
                               _isSearch = true;
                             });
-                          })
+                          },),
                   ],
                   headers: _headers,
                   source: _source,
@@ -313,12 +238,16 @@ class _MonitoringListState extends State<MonitoringList> {
                     return DropDownContainer(data: data);
                   },
                   onChangedRow: (value, header) {
-                    /// print(value);
-                    /// print(header);
+                    // print(value);
+                    // print(header);
+                    // TODO onChangedRow to be implemented
+                    return;
                   },
                   onSubmittedRow: (value, header) {
-                    /// print(value);
-                    /// print(header);
+                    // print(value);
+                    // print(header);
+                    // TODO onChangedRow to be implemented
+                    return;
                   },
                   onTabRow: (data) {
                     log.fine('.build..onTabRow | data: $data');
@@ -336,10 +265,10 @@ class _MonitoringListState extends State<MonitoringList> {
                         _sourceFiltered.sort((a, b) =>
                             a["$_sortColumn"].compareTo(b["$_sortColumn"]));
                       }
-                      var _rangeTop = _currentPerPage! < _sourceFiltered.length
+                      var rangeTop = _currentPerPage! < _sourceFiltered.length
                           ? _currentPerPage!
                           : _sourceFiltered.length;
-                      _source = _sourceFiltered.getRange(0, _rangeTop).toList();
+                      _source = _sourceFiltered.getRange(0, rangeTop).toList();
                       _searchKey = value;
 
                       _isLoading = false;
@@ -378,8 +307,8 @@ class _MonitoringListState extends State<MonitoringList> {
                           value: _currentPerPage,
                           items: _perPages
                               .map((e) => DropdownMenuItem<int>(
-                                    child: Text("$e"),
                                     value: e,
+                                    child: Text("$e"),
                                   ))
                               .toList(),
                           onChanged: (dynamic value) {
@@ -405,9 +334,9 @@ class _MonitoringListState extends State<MonitoringList> {
                       onPressed: _currentPage == 1
                           ? null
                           : () {
-                              var _nextSet = _currentPage - _currentPerPage!;
+                              var nextSet = _currentPage - _currentPerPage!;
                               setState(() {
-                                _currentPage = _nextSet > 1 ? _nextSet : 1;
+                                _currentPage = nextSet > 1 ? nextSet : 1;
                                 _resetData(start: _currentPage - 1);
                               });
                             },
@@ -418,13 +347,13 @@ class _MonitoringListState extends State<MonitoringList> {
                       onPressed: _currentPage + _currentPerPage! - 1 > _total
                           ? null
                           : () {
-                              var _nextSet = _currentPage + _currentPerPage!;
+                              var nextSet = _currentPage + _currentPerPage!;
 
                               setState(() {
-                                _currentPage = _nextSet < _total
-                                    ? _nextSet
+                                _currentPage = nextSet < _total
+                                    ? nextSet
                                     : _total - _currentPerPage!;
-                                _resetData(start: _nextSet - 1);
+                                _resetData(start: nextSet - 1);
                               });
                             },
                       padding: const EdgeInsets.symmetric(horizontal: 15),
@@ -446,7 +375,92 @@ class _MonitoringListState extends State<MonitoringList> {
                 ),
               ),
             ),
-          ])),
+          ],),),
     );
   }
 }
+
+
+final _headers = [
+  DatatableHeader(
+    text: "№",
+    value: "id",
+    show: true,
+    sortable: true,
+    textAlign: TextAlign.center,
+  ),
+  DatatableHeader(
+    text: "id АРО",
+    value: "id_aro",
+    show: true,
+    sortable: true,
+    textAlign: TextAlign.center,
+  ),
+  DatatableHeader(
+    text: "Тип объекта",
+    value: "obj_type",
+    show: true,
+    flex: 2,
+    sortable: true,
+    textAlign: TextAlign.left,
+  ),
+  DatatableHeader(
+    text: "Скважина",
+    value: "well_name",
+    show: true,
+    sortable: true,
+    textAlign: TextAlign.center,
+  ),
+  DatatableHeader(
+    text: "Куст",
+    value: "well_group_name",
+    show: true,
+    sortable: true,
+    textAlign: TextAlign.left,
+  ),
+  DatatableHeader(
+    text: "Объект подготовки",
+    value: "preparation_obj_name",
+    show: true,
+    sortable: true,
+    textAlign: TextAlign.left,
+  ),
+  DatatableHeader(
+    text: "Месторождение",
+    value: "field_name",
+    show: true,
+    sortable: true,
+    textAlign: TextAlign.left,
+  ),
+  DatatableHeader(
+    text: "ДО",
+    value: "company_name",
+    show: true,
+    sortable: true,
+    textAlign: TextAlign.left,
+  ),
+  DatatableHeader(
+    text: "Дата внесения",
+    value: "date_creation",
+    show: true,
+    editable: true,
+    sortable: false,
+    textAlign: TextAlign.center,
+  ),
+  DatatableHeader(
+    text: "Статус",
+    value: "status",
+    show: true,
+    editable: true,
+    sortable: false,
+    textAlign: TextAlign.center,
+  ),
+  DatatableHeader(
+    text: "Статус МЭР",
+    value: "status_mer",
+    show: true,
+    editable: true,
+    sortable: false,
+    textAlign: TextAlign.center,
+  ),
+];
