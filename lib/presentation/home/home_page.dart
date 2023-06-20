@@ -1,4 +1,6 @@
 import 'package:aro_monitoring/infrastructure/dep_objects.dart';
+import 'package:aro_monitoring/infrastructure/generated_data.dart';
+import 'package:aro_monitoring/infrastructure/sql/sql_query.dart';
 import 'package:aro_monitoring/presentation/data/data_page.dart';
 import 'package:aro_monitoring/presentation/data/widgets/monitoring_list.dart';
 import 'package:flutter/material.dart';
@@ -86,7 +88,11 @@ class _HomePageState extends State<HomePage> {
                   onPressed: (){
                     Navigator.push(
                       context,
-                      MaterialPageRoute(builder: (context) =>  const DataPage()),
+                      MaterialPageRoute(builder: (context) => const DataPage(
+                        doData: DoData(
+                          sqlQuery: SqlQuery(sql: 'some real sql query to get such data'),
+                        ),
+                      )),
                     );
                   }, 
                   style: buttonStyle,
@@ -120,8 +126,8 @@ class _HomePageState extends State<HomePage> {
                       },
                       onChanged: (String? value) {
                                   // This is called when the user selects an item.
-                                  setState(() {dropdownValue = value!;});
-                                },
+                        setState(() {dropdownValue = value!;});
+                      },
                       items: _depList.map<DropdownMenuItem<String>>((String value) {
                         return DropdownMenuItem<String>(
                           value: value,

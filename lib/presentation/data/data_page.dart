@@ -11,16 +11,25 @@ import 'package:responsive_table/responsive_table.dart';
 
 ///
 class DataPage extends StatefulWidget {
+  final DoData _doData;
   ///
-  const DataPage({Key? key}) : super(key: key);
+  const DataPage({
+    Key? key,
+    required DoData doData,
+  }) : 
+    _doData = doData,
+    super(key: key);
   ///
   @override
-  State<DataPage> createState() => _DataPageState();
+  State<DataPage> createState() => _DataPageState(
+    doData: _doData,
+  );
 }
 ///
 ///
 class _DataPageState extends State<DataPage> {
   final log = Logger('_DataPageState');
+  final DoData _doData;
   // late List<DatatableHeader> _headers;
 
   final List<int> _perPages = [10, 20, 50, 100];
@@ -44,30 +53,31 @@ class _DataPageState extends State<DataPage> {
   final bool _showSelect = true;
   final random = Random();
   ///
+  _DataPageState({
+    required DoData doData,
+  }) :
+    _doData = doData;
+  ///
   _initializeData() async {
     _expanded = List.generate(_currentPerPage!, (index) => false);
-    const DoData(
-      sqlQuery: SqlQuery(sql: 'some real sql query to get such data'),
-    )
-      .all()
-      .then((result) {
-        result.fold(
-          onData: (doData) {
-            _sourceOriginal.clear();
-            _sourceOriginal.addAll(
-              doData,
-            );
-            _sourceFiltered = _sourceOriginal;
-            _total = _sourceFiltered.length;
-            _source = _sourceFiltered.getRange(0, _currentPerPage!).toList();
-          }, 
-          onError: (
-            (error) {
-              log.warning('._initializeData | error: $error');
-            }
-          ),
-        );
-      });
+    _doData.all().then((result) {
+      result.fold(
+        onData: (doData) {
+          _sourceOriginal.clear();
+          _sourceOriginal.addAll(
+            doData,
+          );
+          _sourceFiltered = _sourceOriginal;
+          _total = _sourceFiltered.length;
+          _source = _sourceFiltered.getRange(0, _currentPerPage!).toList();
+        }, 
+        onError: (
+          (error) {
+            log.warning('._initializeData | error: $error');
+          }
+        ),
+      );
+    });
   }
   ///
   // _mockPullData() async {
