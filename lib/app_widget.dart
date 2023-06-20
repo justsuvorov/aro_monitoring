@@ -1,4 +1,5 @@
 import 'package:aro_monitoring/infrastructure/dos.dart';
+import 'package:aro_monitoring/infrastructure/sql/sql_query.dart';
 import 'package:aro_monitoring/presentation/home/home_page.dart';
 import 'package:flutter/material.dart';
 
@@ -17,7 +18,9 @@ class MyApp extends StatelessWidget {
       ),
       home: const MyHomePage(
         title: 'Мониторинг АРО',
-        depObjects: doList,
+        depObjects: DepObjects(
+          sqlQuery: SqlQuery(sql: 'Some real sql query to get required data'),
+        ),
       ),
     );
   }
