@@ -16,7 +16,7 @@ class DepObjects {
       _sqlQuery.build();
       // TODO request to the sql source to be implemented...
     }
-    return Future.delayed(const Duration(milliseconds: 700)).then((_) {
+    return Future.delayed(const Duration(milliseconds: 1200)).then((_) {
       return const Result(data: _doList);
     });
   }  

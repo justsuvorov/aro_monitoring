@@ -26,7 +26,9 @@ class HomePage extends StatefulWidget {
 class _HomePageState extends State<HomePage> {
   final log = Logger('_HomePageState');
   final DepObjects _depObjects;
-  late List<String> _depList;
+  static const _dropdownEmptyValue = ' - ';
+  final List<String> _depList = [_dropdownEmptyValue];
+  String dropdownValue = _dropdownEmptyValue;
   bool _isLoading = false;
   ///
   _HomePageState({
@@ -43,7 +45,9 @@ class _HomePageState extends State<HomePage> {
     _depObjects.all().then((result) {
       result.fold(
         onData: (depList) {
-          _depList = depList;
+          _depList.clear();
+          _depList.addAll(depList);
+          dropdownValue = _depList.first;
         }, 
         onError: (
           (error) {
@@ -64,7 +68,6 @@ class _HomePageState extends State<HomePage> {
   ///
   @override
   Widget build(BuildContext context) {
-    String dropdownValue = _depList.first;
     var buttonStyle = const ButtonStyle(
       backgroundColor: MaterialStatePropertyAll<Color>(Color.fromARGB(255, 2, 108, 189)),
       minimumSize: MaterialStatePropertyAll<Size>(Size(800, 80)),
@@ -75,7 +78,6 @@ class _HomePageState extends State<HomePage> {
       fontFamily: 'GPN_DIN',
       color: Colors.white,
     );
-    
     return Scaffold(
       appBar: AppBar(
         backgroundColor: Colors.blueAccent,
