@@ -2,7 +2,7 @@ import 'package:aro_monitoring/infrastructure/dep_objects.dart';
 import 'package:aro_monitoring/infrastructure/do_data.dart';
 import 'package:aro_monitoring/infrastructure/sql/sql_query.dart';
 import 'package:aro_monitoring/presentation/data/data_page.dart';
-import 'package:aro_monitoring/presentation/data/widgets/monitoring_list.dart';
+import 'package:aro_monitoring/presentation/monitoring/monitoring_page.dart';
 import 'package:flutter/material.dart';
 import 'package:logging/logging.dart';
 
@@ -152,10 +152,14 @@ class _HomePageState extends State<HomeBody> {
                 ),
                 const SizedBox(height: 50),
                 ElevatedButton(
-                  onPressed: (){Navigator.push(
+                  onPressed: (){
+                    Navigator.push(
                       context,
-                      MaterialPageRoute(builder: (context) =>  const MonitoringList()),
-                    );},  
+                      MaterialPageRoute(
+                        builder: (context) =>  const MonitoringPage(title: "Форма заполнения мероприятий"),
+                      ),
+                    );
+                  },  
                   style: buttonStyle,
                   child: Text('Просмотр таблицы нерентабельных объектов', style: textStyle,),
                   
