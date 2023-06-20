@@ -1,4 +1,27 @@
-Map<String, String> companyNames = {
+import 'package:aro_monitoring/infrastructure/sql/sql_query.dart';
+
+class Companies {
+  final SqlQuery _sqlQuery;
+  ///
+  Companies({
+    required SqlQuery sqlQuery,
+  }) :
+    _sqlQuery = sqlQuery;
+  ///
+  /// returns all stored companies
+  Map<String, String> all() {
+    if (_sqlQuery.valid()) {
+      _sqlQuery.build();
+      // TODO request to the sql source to be implemented...
+    }
+    return _companyNames;
+  }  
+}
+
+/// 
+/// temporary representations of the databases data
+/// TODO to be deleted after database is connected
+Map<String, String> _companyNames = {
   'Арчинское': 'ГПН-Восток',
   'Западно-Лугинецкое': 'ГПН-Восток',
   'Крапивинское': 'ГПН-Восток',
@@ -77,5 +100,5 @@ Map<String, String> companyNames = {
   'Приобское': 'ГПН-Хантос',
   'Южное': 'ГПН-Хантос',
   'Южно-Киняминское': 'ГПН-Хантос',
-  'Новопортовское': 'ГПН-Хантос'
+  'Новопортовское': 'ГПН-Хантос',
 };
