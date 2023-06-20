@@ -37,9 +37,7 @@ class _HomePageState extends State<HomeBody> {
   @override
   void initState() {
     super.initState();
-    if (mounted) {
-      setState(() => _isLoading = true);
-    }
+    _isLoading = true;
     _depObjects.all().then((result) {
       result.fold(
         onData: (depList) {
@@ -103,6 +101,7 @@ class _HomePageState extends State<HomeBody> {
                     Navigator.push(
                       context,
                       MaterialPageRoute(builder: (context) => const DataPage(
+                        title: "Форма заполнения мероприятий",
                         doData: DoData(
                           sqlQuery: SqlQuery(sql: 'some real sql query to get such data'),
                         ),
