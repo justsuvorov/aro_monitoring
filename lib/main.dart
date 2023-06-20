@@ -4,8 +4,10 @@ import 'package:flutter/widgets.dart';
 import 'package:logging/logging.dart';
 
 
-List companies = ['Все ДО', 'ГПН-Восток', 'ГПН-ННГ', 'ГПН-Оренбург', 'ГПН-Хантос', 'Мессояха', 'СН-МНГ'];
+// List companies = ['Все ДО', 'ГПН-Восток', 'ГПН-ННГ', 'ГПН-Оренбург', 'ГПН-Хантос', 'Мессояха', 'СН-МНГ'];
 void main() {
   Logger.root.level = Level.INFO;  
-  runApp(const MyApp());
+  runApp(
+    const MyApp(),
+  );
 }
