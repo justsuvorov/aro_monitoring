@@ -4,7 +4,6 @@ import 'package:aro_monitoring/infrastructure/sql/sql_query.dart';
 import 'package:aro_monitoring/presentation/data/widgets/data_body.dart';
 import 'package:aro_monitoring/presentation/home/home_page.dart';
 import 'package:flutter/material.dart';
-import 'package:responsive_table/responsive_table.dart';
 
 ///
 class DataPage extends StatelessWidget {

@@ -55,13 +55,13 @@ class _DataPageState extends State<DataBody> {
   }) :
     _doData = doData;
   ///
-  _initializeData() {
+  Future<void> _initializeData() {
       _isLoading = true;
       if (mounted) {
         setState(() {return;});
       }
     _expanded = List.generate(_currentPerPage!, (index) => false);
-    _doData.all().then((result) {
+    return _doData.all().then((result) {
       result.fold(
         onData: (doData) {
           _sourceOriginal.clear();
