@@ -264,7 +264,7 @@ class _DataPageState extends State<DataPage> {
                       setState(() => _selecteds.add(item));
                     } else {
                       setState(
-                          () => _selecteds.removeAt(_selecteds.indexOf(item)));
+                          () => _selecteds.removeAt(_selecteds.indexOf(item)),);
                     }
                   },
                   onSelectAll: (value) {

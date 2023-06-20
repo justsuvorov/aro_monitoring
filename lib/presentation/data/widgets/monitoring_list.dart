@@ -157,7 +157,7 @@ class _MonitoringListState extends State<MonitoringList> {
       builder: (context) => const MyHomePage(
         title: 'Мониторинг АРО',
         doList: doList,
-      )
+      ),
     ),
   );},
             ),
@@ -165,7 +165,7 @@ class _MonitoringListState extends State<MonitoringList> {
               leading: const Icon(Icons.storage),
               title: const Text("data"),
               onTap: () {},
-            )
+            ),
           ],
         ),
       ),
@@ -284,7 +284,7 @@ class _MonitoringListState extends State<MonitoringList> {
                       setState(() => _selecteds.add(item));
                     } else {
                       setState(
-                          () => _selecteds.removeAt(_selecteds.indexOf(item)));
+                          () => _selecteds.removeAt(_selecteds.indexOf(item)),);
                     }
                   },
                   onSelectAll: (value) {
@@ -357,16 +357,19 @@ class _MonitoringListState extends State<MonitoringList> {
                               });
                             },
                       padding: const EdgeInsets.symmetric(horizontal: 15),
-                    )
+                    ),
                   ],
                   headerDecoration: const BoxDecoration(
                       color: Colors.grey,
                       border: Border(
-                          bottom: BorderSide(color: Colors.red, width: 1))),
+                          bottom: BorderSide(color: Colors.red, width: 1),
+                      ),
+                  ),
                   selectedDecoration: BoxDecoration(
                     border: Border(
                         bottom:
-                            BorderSide(color: Colors.green[300]!, width: 1)),
+                            BorderSide(color: Colors.green[300]!, width: 1),
+                    ),
                     color: Colors.green,
                   ),
                   headerTextStyle: const TextStyle(color: Colors.white),
