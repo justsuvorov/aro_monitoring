@@ -1,9 +1,10 @@
 import 'package:aro_monitoring/infrastructure/dep_objects.dart';
-import 'package:aro_monitoring/infrastructure/generated_data.dart';
+import 'package:aro_monitoring/infrastructure/do_data.dart';
 import 'package:aro_monitoring/infrastructure/sql/sql_query.dart';
 import 'package:aro_monitoring/presentation/data/data_page.dart';
 import 'package:aro_monitoring/presentation/data/widgets/monitoring_list.dart';
 import 'package:flutter/material.dart';
+import 'package:logging/logging.dart';
 
 class HomePage extends StatefulWidget {
   final String title;
@@ -23,8 +24,10 @@ class HomePage extends StatefulWidget {
 
 ///
 class _HomePageState extends State<HomePage> {
+  final log = Logger('_HomePageState');
   final DepObjects _depObjects;
   late List<String> _depList;
+  bool _isLoading = false;
   ///
   _HomePageState({
     required DepObjects depObjects,
@@ -33,8 +36,26 @@ class _HomePageState extends State<HomePage> {
   ///
   @override
   void initState() {
-    _depList = _depObjects.all();
     super.initState();
+    if (mounted) {
+      setState(() => _isLoading = true);
+    }
+    _depObjects.all().then((result) {
+      result.fold(
+        onData: (depList) {
+          _depList = depList;
+        }, 
+        onError: (
+          (error) {
+            log.warning('._initializeData | error: $error');
+          }
+        ),
+      );
+    }).whenComplete(() {
+      if (mounted) {
+        setState(() => _isLoading = false);
+      }
+    });
   }
   ///
   void _updateButtonClick() {
@@ -82,7 +103,7 @@ class _HomePageState extends State<HomePage> {
                   style: buttonStyle, 
                   child: Text('Обновление базы мониторинга', style: textStyle,),
                   
-                  ),
+                ),
                 const SizedBox(height: 50),
                 ElevatedButton(
                   onPressed: (){
@@ -125,7 +146,7 @@ class _HomePageState extends State<HomePage> {
                         }).toList();
                       },
                       onChanged: (String? value) {
-                                  // This is called when the user selects an item.
+                        // This is called when the user selects an item.
                         setState(() {dropdownValue = value!;});
                       },
                       items: _depList.map<DropdownMenuItem<String>>((String value) {

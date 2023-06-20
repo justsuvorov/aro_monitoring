@@ -16,17 +16,16 @@ class DoData {
       // TODO request to the sql source to be implemented...
     }
     return Future.delayed(
-      const Duration(seconds: 3),
+      const Duration(milliseconds: 500),
     ).then((_) {
       return const Result(data: _data);
     });
   }  
 }
 
-// List<Map<String, dynamic>> generateData({int n = 10}) {
-//   return _data;
-// }
-
+/// 
+/// temporary representations of the databases data
+/// TODO to be deleted after database is connected
 const _data = [
     {
       "id": 213,

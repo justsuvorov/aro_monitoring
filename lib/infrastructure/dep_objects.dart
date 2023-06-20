@@ -1,3 +1,4 @@
+import 'package:aro_monitoring/domain/core/result/result.dart';
 import 'package:aro_monitoring/infrastructure/sql/sql_query.dart';
 
 ///
@@ -10,12 +11,14 @@ class DepObjects {
     _sqlQuery = sqlQuery;
   ///
   /// returns all stored D.. Objects
-  List<String> all() {
+  Future<Result<List<String>>> all() {
     if (_sqlQuery.valid()) {
       _sqlQuery.build();
       // TODO request to the sql source to be implemented...
     }
-    return _doList;
+    return Future.delayed(const Duration(milliseconds: 700)).then((_) {
+      return const Result(data: _doList);
+    });
   }  
 }
 

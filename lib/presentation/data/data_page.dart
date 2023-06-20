@@ -1,7 +1,7 @@
 import 'dart:math';
 
 import 'package:aro_monitoring/infrastructure/dep_objects.dart';
-import 'package:aro_monitoring/infrastructure/generated_data.dart';
+import 'package:aro_monitoring/infrastructure/do_data.dart';
 import 'package:aro_monitoring/infrastructure/sql/sql_query.dart';
 import 'package:aro_monitoring/presentation/core/widgets/drop_down_container.dart';
 import 'package:aro_monitoring/presentation/home/home_page.dart';
@@ -58,8 +58,10 @@ class _DataPageState extends State<DataPage> {
   }) :
     _doData = doData;
   ///
-  _initializeData() async {
-    setState(() => _isLoading = true);
+  _initializeData() {
+    if (mounted) {
+      setState(() => _isLoading = true);
+    }
     _expanded = List.generate(_currentPerPage!, (index) => false);
     _doData.all().then((result) {
       result.fold(
@@ -79,7 +81,9 @@ class _DataPageState extends State<DataPage> {
         ),
       );
     }).whenComplete(() {
-      setState(() => _isLoading = false);
+      if (mounted) {
+        setState(() => _isLoading = false);
+      }
     });
   }
   ///
@@ -263,11 +267,13 @@ class _DataPageState extends State<DataPage> {
                     /// print(value);
                     /// print(header);
                     // TODO onPress to be implemented
+                    return;
                   },
                   onSubmittedRow: (value, header) {
                     /// print(value);
                     /// print(header);
                     // TODO onPress to be implemented
+                    return;
                   },
                   onTabRow: (data) {
                     log.fine('build..onTabRow | data: $data');
