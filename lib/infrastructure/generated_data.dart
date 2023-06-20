@@ -1,10 +1,31 @@
+import 'package:aro_monitoring/domain/core/result/result.dart';
+import 'package:aro_monitoring/infrastructure/sql/sql_query.dart';
+
 class DoData {
+  final SqlQuery _sqlQuery;
   ///
+  const DoData({
+    required SqlQuery sqlQuery,
+  }) :
+    _sqlQuery = sqlQuery;
+  ///
+  /// returns all stored D.. Objects
+  Future<Result<List<Map<String, dynamic>>>> all() async {
+    if (_sqlQuery.valid()) {
+      _sqlQuery.build();
+      // TODO request to the sql source to be implemented...
+    }
+    return Future.delayed(
+      const Duration(seconds: 3),
+    ).then((_) {
+      return const Result(data: _data);
+    });
+  }  
 }
 
-List<Map<String, dynamic>> generateData({int n = 10}) {
-  return _data;
-}
+// List<Map<String, dynamic>> generateData({int n = 10}) {
+//   return _data;
+// }
 
 const _data = [
     {

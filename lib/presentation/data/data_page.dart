@@ -45,22 +45,44 @@ class _DataPageState extends State<DataPage> {
   final random = Random();
   ///
   _initializeData() async {
-    _mockPullData();
+    _expanded = List.generate(_currentPerPage!, (index) => false);
+    const DoData(
+      sqlQuery: SqlQuery(sql: 'some real sql query to get such data'),
+    )
+      .all()
+      .then((result) {
+        result.fold(
+          onData: (doData) {
+            _sourceOriginal.clear();
+            _sourceOriginal.addAll(
+              doData,
+            );
+            _sourceFiltered = _sourceOriginal;
+            _total = _sourceFiltered.length;
+            _source = _sourceFiltered.getRange(0, _currentPerPage!).toList();
+          }, 
+          onError: (
+            (error) {
+              log.warning('._initializeData | error: $error');
+            }
+          ),
+        );
+      });
   }
   ///
-  _mockPullData() async {
-    _expanded = List.generate(_currentPerPage!, (index) => false);
+  // _mockPullData() async {
+  //   _expanded = List.generate(_currentPerPage!, (index) => false);
 
-    setState(() => _isLoading = true);
-    Future.delayed(const Duration(seconds: 3)).then((value) {
-      _sourceOriginal.clear();
-      _sourceOriginal.addAll(generateData(n: 15));
-      _sourceFiltered = _sourceOriginal;
-      _total = _sourceFiltered.length;
-      _source = _sourceFiltered.getRange(0, _currentPerPage!).toList();
-      setState(() => _isLoading = false);
-    });
-  }
+  //   setState(() => _isLoading = true);
+  //   Future.delayed(const Duration(seconds: 3)).then((value) {
+  //     _sourceOriginal.clear();
+  //     _sourceOriginal.addAll(generateData(n: 15));
+  //     _sourceFiltered = _sourceOriginal;
+  //     _total = _sourceFiltered.length;
+  //     _source = _sourceFiltered.getRange(0, _currentPerPage!).toList();
+  //     setState(() => _isLoading = false);
+  //   });
+  // }
   ///
   _resetData({start = 0}) async {
     setState(() => _isLoading = true);
