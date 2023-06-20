@@ -130,8 +130,6 @@ class _MyHomePageState extends State<MyHomePage> {
                   child: Text('Просмотр таблицы нерентабельных объектов', style: textStyle,),
                   
                   ),
-        
-      
                 ],
               ),
               ],
