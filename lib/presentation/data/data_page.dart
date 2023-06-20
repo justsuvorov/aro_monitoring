@@ -20,7 +20,7 @@ class DataPage extends StatefulWidget {
 ///
 class _DataPageState extends State<DataPage> {
   final log = Logger('_DataPageState');
-  late List<DatatableHeader> _headers;
+  // late List<DatatableHeader> _headers;
 
   final List<int> _perPages = [10, 20, 50, 100];
   int _total = 100;

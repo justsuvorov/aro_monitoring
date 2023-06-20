@@ -76,7 +76,7 @@ class _MyHomePageState extends State<MyHomePage> {
                 ElevatedButton(
                   onPressed: (){Navigator.push(
                       context,
-                      MaterialPageRoute(builder: (context) =>  DataPage()),
+                      MaterialPageRoute(builder: (context) =>  const DataPage()),
                     );}, 
                   style: buttonStyle,
                   child: Text('Заполнить форму для ДО',style: textStyle,),
