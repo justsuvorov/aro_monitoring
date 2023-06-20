@@ -92,8 +92,10 @@ class _HomePageState extends State<HomeBody> {
                 ElevatedButton(
                   onPressed: _updateButtonClick,
                   style: buttonStyle, 
-                  child: Text('Обновление базы мониторинга', style: textStyle,),
-                  
+                  child: Text(
+                    'Обновление базы мониторинга', 
+                    style: textStyle,
+                  ),
                 ),
                 const SizedBox(height: 50),
                 ElevatedButton(
