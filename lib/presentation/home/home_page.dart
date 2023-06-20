@@ -27,7 +27,7 @@ class _MyHomePageState extends State<MyHomePage> {
   });
   ///
   void _updateButtonClick() {
-
+    // TODO method to be implemented...
   }
   ///
   @override
@@ -48,12 +48,15 @@ class _MyHomePageState extends State<MyHomePage> {
       appBar: AppBar(
         backgroundColor: Colors.blueAccent,
         title: Text(widget.title, style: const TextStyle(fontFamily: 'GPN_DIN', fontSize: 32),),
-        actions: <Widget>[IconButton(
+        actions: <Widget>[
+          IconButton(
             icon: const Icon(Icons.home),
             tooltip: 'Главная страница',
             onPressed: () {
-              
-            })],
+              // TODO route to be implemented
+            },
+          ),
+        ],
       ),
       body: Center(
         child:
@@ -88,37 +91,40 @@ class _MyHomePageState extends State<MyHomePage> {
                 const SizedBox(height: 100),
                 Row(mainAxisAlignment: MainAxisAlignment.center,
                   children: [
-                        Text("Выбор ДО", style: textStyle),  
-                        SizedBox(width: 100),
-                       DropdownButton<String>(value: dropdownValue,
-                                        icon: const Icon(Icons.arrow_downward),         
-                                        selectedItemBuilder: (BuildContext context) {
-                                          return doList.map((String value) {
-                                            return Align(
-                                              alignment: Alignment.centerLeft,
-                                              child: Text(
-                                                dropdownValue,
-                                                style: const TextStyle(color: Colors.white, fontFamily: 'GPN_DIN', fontSize: 20),
-                                              ),
-                                            );
-                                          }).toList();
-                                        },
-                                        onChanged: (String? value) {
-                                                    // This is called when the user selects an item.
-                                                    setState(() {dropdownValue = value!;});
-                                                  },
-                                        items: doList.map<DropdownMenuItem<String>>((String value) {
-                                            return DropdownMenuItem<String>(
-                                              value: value,
-                                              child: Text(value, style: TextStyle(fontFamily: 'GPN_DIN')),
-                                            );
-                                          }).toList()),]
-                                          ),
-                                        const SizedBox(height: 50),
-                                          ElevatedButton(
+                    Text("Выбор ДО", style: textStyle),  
+                    const SizedBox(width: 100),
+                    DropdownButton<String>(
+                      value: dropdownValue,
+                      icon: const Icon(Icons.arrow_downward),         
+                      selectedItemBuilder: (BuildContext context) {
+                        return doList.map((String value) {
+                          return Align(
+                            alignment: Alignment.centerLeft,
+                            child: Text(
+                              dropdownValue,
+                              style: const TextStyle(color: Colors.white, fontFamily: 'GPN_DIN', fontSize: 20),
+                            ),
+                          );
+                        }).toList();
+                      },
+                      onChanged: (String? value) {
+                                  // This is called when the user selects an item.
+                                  setState(() {dropdownValue = value!;});
+                                },
+                      items: doList.map<DropdownMenuItem<String>>((String value) {
+                        return DropdownMenuItem<String>(
+                          value: value,
+                          child: Text(value, style: const TextStyle(fontFamily: 'GPN_DIN')),
+                        );
+                      }).toList(),
+                    ),
+                  ],
+                ),
+                const SizedBox(height: 50),
+                ElevatedButton(
                    onPressed: (){Navigator.push(
                       context,
-                      MaterialPageRoute(builder: (context) =>  MonitoringList()),
+                      MaterialPageRoute(builder: (context) =>  const MonitoringList()),
                     );},  
                   style: buttonStyle,
                   child: Text('Просмотр таблицы нерентабельных объектов', style: textStyle,),
@@ -126,12 +132,12 @@ class _MyHomePageState extends State<MyHomePage> {
                   ),
         
       
-                ]
-              )
+                ],
+              ),
               ],
           ),
       ),
        // This trailing comma makes auto-formatting nicer for build methods.
-    backgroundColor: Color.fromARGB(255, 28, 33, 37),);
+    backgroundColor: const Color.fromARGB(255, 28, 33, 37),);
   }
 }

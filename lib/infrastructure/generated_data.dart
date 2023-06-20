@@ -1,5 +1,8 @@
 List<Map<String, dynamic>> generateData({int n = 10}) {
-  return [
+  return _data;
+}
+
+const _data = [
     {
       "id": 213,
       "name": "Cкважина",
@@ -271,6 +274,5 @@ List<Map<String, dynamic>> generateData({int n = 10}) {
       "responsible_person": "",
       "obj_status": "",
       "failure": "",
-    }
+    },
   ];
-}

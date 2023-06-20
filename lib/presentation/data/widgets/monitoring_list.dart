@@ -6,12 +6,15 @@ import 'package:aro_monitoring/presentation/home/home_page.dart';
 import 'package:flutter/material.dart';
 import 'package:responsive_table/responsive_table.dart';
 
+///
 class MonitoringList extends StatefulWidget {
-  MonitoringList({Key? key}) : super(key: key);
+  ///
+  const MonitoringList({Key? key}) : super(key: key);
   @override
   _MonitoringListState createState() => _MonitoringListState();
 }
-
+///
+///
 class _MonitoringListState extends State<MonitoringList> {
   late List<DatatableHeader> _headers;
 
@@ -70,7 +73,7 @@ class _MonitoringListState extends State<MonitoringList> {
     _expanded = List.generate(_currentPerPage!, (index) => false);
 
     setState(() => _isLoading = true);
-    Future.delayed(Duration(seconds: 3)).then((value) {
+    Future.delayed(const Duration(seconds: 3)).then((value) {
       _sourceOriginal.clear();
       _sourceOriginal.addAll(_generateData(n: 15));
       _sourceFiltered = _sourceOriginal;
@@ -84,7 +87,7 @@ class _MonitoringListState extends State<MonitoringList> {
     setState(() => _isLoading = true);
     var _expandedLen =
         _total - start < _currentPerPage! ? _total - start : _currentPerPage;
-    Future.delayed(Duration(seconds: 0)).then((value) {
+    Future.delayed(const Duration(seconds: 0)).then((value) {
       _expanded = List.generate(_expandedLen as int, (index) => false);
       _source.clear();
       _source = _sourceFiltered.getRange(start, start + _expandedLen).toList();
@@ -210,11 +213,11 @@ class _MonitoringListState extends State<MonitoringList> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text("Форма заполнения мероприятий"),
+        title: const Text("Форма заполнения мероприятий"),
         actions: [
           IconButton(
             onPressed: _initializeData,
-            icon: Icon(Icons.refresh_sharp),
+            icon: const Icon(Icons.refresh_sharp),
           ),
         ],
       ),
@@ -222,8 +225,8 @@ class _MonitoringListState extends State<MonitoringList> {
         child: ListView(
           children: [
             ListTile(
-              leading: Icon(Icons.home),
-              title: Text("home"),
+              leading: const Icon(Icons.home),
+              title: const Text("home"),
               onTap: () {Navigator.push(
     context,
     MaterialPageRoute(
@@ -235,8 +238,8 @@ class _MonitoringListState extends State<MonitoringList> {
   );},
             ),
             ListTile(
-              leading: Icon(Icons.storage),
-              title: Text("data"),
+              leading: const Icon(Icons.storage),
+              title: const Text("data"),
               onTap: () {},
             )
           ],
@@ -248,9 +251,9 @@ class _MonitoringListState extends State<MonitoringList> {
               mainAxisSize: MainAxisSize.max,
               children: [
             Container(
-              margin: EdgeInsets.all(10),
-              padding: EdgeInsets.all(0),
-              constraints: BoxConstraints(
+              margin: const EdgeInsets.all(10),
+              padding: const EdgeInsets.all(0),
+              constraints: const BoxConstraints(
                 maxHeight: 700,
               ),
               child: Card(
@@ -260,8 +263,8 @@ class _MonitoringListState extends State<MonitoringList> {
                 child: ResponsiveDatatable(
                   title: TextButton.icon(
                     onPressed: () => {},
-                    icon: Icon(Icons.add),
-                    label: Text("new item"),
+                    icon: const Icon(Icons.add),
+                    label: const Text("new item"),
                   ),
                   reponseScreenSizes: [ScreenSize.xs],
                   actions: [
@@ -274,7 +277,7 @@ class _MonitoringListState extends State<MonitoringList> {
                                     .replaceAll(new RegExp('[\\W_]+'), ' ')
                                     .toUpperCase(),
                             prefixIcon: IconButton(
-                                icon: Icon(Icons.cancel),
+                                icon: const Icon(Icons.cancel),
                                 onPressed: () {
                                   setState(() {
                                     _isSearch = false;
@@ -282,14 +285,14 @@ class _MonitoringListState extends State<MonitoringList> {
                                   _initializeData();
                                 }),
                             suffixIcon: IconButton(
-                                icon: Icon(Icons.search), onPressed: () {})),
+                                icon: const Icon(Icons.search), onPressed: () {})),
                         onSubmitted: (value) {
                           _filterData(value);
                         },
                       )),
                     if (!_isSearch)
                       IconButton(
-                          icon: Icon(Icons.search),
+                          icon: const Icon(Icons.search),
                           onPressed: () {
                             setState(() {
                               _isSearch = true;
@@ -303,7 +306,7 @@ class _MonitoringListState extends State<MonitoringList> {
                   autoHeight: false,
                   dropContainer: (data) {
                     if (int.tryParse(data['id'].toString())!.isEven) {
-                      return Text("is Even");
+                      return const Text("is Even");
                     }
                     return DropDownContainer(data: data);
                   },
@@ -363,12 +366,12 @@ class _MonitoringListState extends State<MonitoringList> {
                   },
                   footers: [
                     Container(
-                      padding: EdgeInsets.symmetric(horizontal: 15),
-                      child: Text("Rows per page:"),
+                      padding: const EdgeInsets.symmetric(horizontal: 15),
+                      child: const Text("Rows per page:"),
                     ),
                     if (_perPages.isNotEmpty)
                       Container(
-                        padding: EdgeInsets.symmetric(horizontal: 15),
+                        padding: const EdgeInsets.symmetric(horizontal: 15),
                         child: DropdownButton<int>(
                           value: _currentPerPage,
                           items: _perPages
@@ -388,12 +391,12 @@ class _MonitoringListState extends State<MonitoringList> {
                         ),
                       ),
                     Container(
-                      padding: EdgeInsets.symmetric(horizontal: 15),
+                      padding: const EdgeInsets.symmetric(horizontal: 15),
                       child:
                           Text("$_currentPage - $_currentPerPage of $_total"),
                     ),
                     IconButton(
-                      icon: Icon(
+                      icon: const Icon(
                         Icons.arrow_back_ios,
                         size: 16,
                       ),
@@ -406,10 +409,10 @@ class _MonitoringListState extends State<MonitoringList> {
                                 _resetData(start: _currentPage - 1);
                               });
                             },
-                      padding: EdgeInsets.symmetric(horizontal: 15),
+                      padding: const EdgeInsets.symmetric(horizontal: 15),
                     ),
                     IconButton(
-                      icon: Icon(Icons.arrow_forward_ios, size: 16),
+                      icon: const Icon(Icons.arrow_forward_ios, size: 16),
                       onPressed: _currentPage + _currentPerPage! - 1 > _total
                           ? null
                           : () {
@@ -422,10 +425,10 @@ class _MonitoringListState extends State<MonitoringList> {
                                 _resetData(start: _nextSet - 1);
                               });
                             },
-                      padding: EdgeInsets.symmetric(horizontal: 15),
+                      padding: const EdgeInsets.symmetric(horizontal: 15),
                     )
                   ],
-                  headerDecoration: BoxDecoration(
+                  headerDecoration: const BoxDecoration(
                       color: Colors.grey,
                       border: Border(
                           bottom: BorderSide(color: Colors.red, width: 1))),
@@ -435,9 +438,9 @@ class _MonitoringListState extends State<MonitoringList> {
                             BorderSide(color: Colors.green[300]!, width: 1)),
                     color: Colors.green,
                   ),
-                  headerTextStyle: TextStyle(color: Colors.white),
-                  rowTextStyle: TextStyle(color: Colors.green),
-                  selectedTextStyle: TextStyle(color: Colors.white),
+                  headerTextStyle: const TextStyle(color: Colors.white),
+                  rowTextStyle: const TextStyle(color: Colors.green),
+                  selectedTextStyle: const TextStyle(color: Colors.white),
                 ),
               ),
             ),
