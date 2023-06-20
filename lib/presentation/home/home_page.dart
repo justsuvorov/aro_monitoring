@@ -23,7 +23,10 @@ class HomePage extends StatelessWidget {
           icon: Icon(null),
           onPressed: null,
         ),
-        title: Text(_title, style: const TextStyle(fontFamily: 'GPN_DIN', fontSize: 32),),
+        title: Text(
+          _title, 
+          style: const TextStyle(fontFamily: 'GPN_DIN', fontSize: 32),
+        ),
         // actions: [],
       ),
       body: HomeBody(
