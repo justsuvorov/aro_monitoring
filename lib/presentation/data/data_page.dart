@@ -5,18 +5,24 @@ import 'package:aro_monitoring/infrastructure/generated_data.dart';
 import 'package:aro_monitoring/presentation/core/widgets/drop_down_container.dart';
 import 'package:aro_monitoring/presentation/home/home_page.dart';
 import 'package:flutter/material.dart';
+import 'package:logging/logging.dart';
 import 'package:responsive_table/responsive_table.dart';
 
+///
 class DataPage extends StatefulWidget {
-  DataPage({Key? key}) : super(key: key);
+  ///
+  const DataPage({Key? key}) : super(key: key);
+  ///
   @override
   _DataPageState createState() => _DataPageState();
 }
-
+///
+///
 class _DataPageState extends State<DataPage> {
+  final log = Logger('_DataPageState');
   late List<DatatableHeader> _headers;
 
-  List<int> _perPages = [10, 20, 50, 100];
+  final List<int> _perPages = [10, 20, 50, 100];
   int _total = 100;
   int? _currentPerPage = 10;
   List<bool>? _expanded;
@@ -24,17 +30,17 @@ class _DataPageState extends State<DataPage> {
 
   int _currentPage = 1;
   bool _isSearch = false;
-  List<Map<String, dynamic>> _sourceOriginal = [];
+  final List<Map<String, dynamic>> _sourceOriginal = [];
   List<Map<String, dynamic>> _sourceFiltered = [];
   List<Map<String, dynamic>> _source = [];
   List<Map<String, dynamic>> _selecteds = [];
   // ignore: unused_field
-  String _selectableKey = "id";
+  final String _selectableKey = "id";
 
   String? _sortColumn;
   bool _sortAscending = true;
   bool _isLoading = true;
-  bool _showSelect = true;
+  final bool _showSelect = true;
   final random = Random();
 
   _initializeData() async {
@@ -224,7 +230,7 @@ class _DataPageState extends State<DataPage> {
                     // TODO onPress to be implemented
                   },
                   onTabRow: (data) {
-                    print(data);
+                    log.fine('build..onTabRow | data: $data');
                   },
                   onSort: (value) {
                     setState(() => _isLoading = true);
@@ -253,7 +259,7 @@ class _DataPageState extends State<DataPage> {
                   sortColumn: _sortColumn,
                   isLoading: _isLoading,
                   onSelect: (value, item) {
-                     print("$value  $item ");
+                    log.fine('build..onSelect | value: $value   item: $item');
                     if (value!) {
                       setState(() => _selecteds.add(item));
                     } else {

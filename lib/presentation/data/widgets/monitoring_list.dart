@@ -4,6 +4,7 @@ import 'package:aro_monitoring/infrastructure/dos.dart';
 import 'package:aro_monitoring/presentation/core/widgets/drop_down_container.dart';
 import 'package:aro_monitoring/presentation/home/home_page.dart';
 import 'package:flutter/material.dart';
+import 'package:logging/logging.dart';
 import 'package:responsive_table/responsive_table.dart';
 
 ///
@@ -16,6 +17,7 @@ class MonitoringList extends StatefulWidget {
 ///
 ///
 class _MonitoringListState extends State<MonitoringList> {
+    final log = Logger('_MonitoringListState');
   late List<DatatableHeader> _headers;
 
   List<int> _perPages = [10, 20, 50, 100];
@@ -43,7 +45,7 @@ class _MonitoringListState extends State<MonitoringList> {
     final List source = List.filled(n, 10);
     List<Map<String, dynamic>> temps = [];
     var i = 1;
-    print(i);
+    log.fine('._generateData | i: $i');
     // ignore: unused_local_variable
     for (var data in source) {
       temps.add({
@@ -94,7 +96,7 @@ class _MonitoringListState extends State<MonitoringList> {
       setState(() => _isLoading = false);
     });
   }
-
+  ///
   _filterData(value) {
     setState(() => _isLoading = true);
 
@@ -115,7 +117,7 @@ class _MonitoringListState extends State<MonitoringList> {
       _expanded = List.generate(_rangeTop, (index) => false);
       _source = _sourceFiltered.getRange(0, _rangeTop).toList();
     } catch (e) {
-      print(e);
+      log.warning('._filterData | error: $e');
     }
     setState(() => _isLoading = false);
   }
@@ -319,7 +321,7 @@ class _MonitoringListState extends State<MonitoringList> {
                     /// print(header);
                   },
                   onTabRow: (data) {
-                    print(data);
+                    log.fine('.build..onTabRow | data: $data');
                   },
                   onSort: (value) {
                     setState(() => _isLoading = true);
@@ -348,7 +350,7 @@ class _MonitoringListState extends State<MonitoringList> {
                   sortColumn: _sortColumn,
                   isLoading: _isLoading,
                   onSelect: (value, item) {
-                    print("$value  $item ");
+                    log.fine('.build..onSelect | value: $value  item: $item ');
                     if (value!) {
                       setState(() => _selecteds.add(item));
                     } else {
