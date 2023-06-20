@@ -1,4 +1,4 @@
-import 'package:aro_monitoring/infrastructure/dos.dart';
+import 'package:aro_monitoring/infrastructure/dep_objects.dart';
 import 'package:aro_monitoring/presentation/data/data_page.dart';
 import 'package:aro_monitoring/presentation/data/widgets/monitoring_list.dart';
 import 'package:flutter/material.dart';
@@ -83,10 +83,12 @@ class _HomePageState extends State<HomePage> {
                   ),
                 const SizedBox(height: 50),
                 ElevatedButton(
-                  onPressed: (){Navigator.push(
+                  onPressed: (){
+                    Navigator.push(
                       context,
                       MaterialPageRoute(builder: (context) =>  const DataPage()),
-                    );}, 
+                    );
+                  }, 
                   style: buttonStyle,
                   child: Text('Заполнить форму для ДО',style: textStyle,),
                   ),
