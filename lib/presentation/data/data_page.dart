@@ -129,17 +129,19 @@ class _DataPageState extends State<DataPage> {
             ListTile(
               leading: const Icon(Icons.home),
               title: const Text("home"),
-              onTap: () {Navigator.push(
-    context,
-    MaterialPageRoute(
-      builder: (context) => const MyHomePage(
-        title: 'Мониторинг АРО',
-        depObjects: DepObjects(
-          sqlQuery: SqlQuery(sql: 'Some real sql query to get required data'),
-        ),
-      ),
-    ),
-  );},
+              onTap: () {
+                Navigator.push(
+                  context,
+                  MaterialPageRoute(
+                    builder: (context) => const MyHomePage(
+                      title: 'Мониторинг АРО',
+                      depObjects: DepObjects(
+                        sqlQuery: SqlQuery(sql: 'Some real sql query to get required data'),
+                      ),
+                    ),
+                  ),
+                );
+              },
             ),
             ListTile(
               leading: const Icon(Icons.storage),
