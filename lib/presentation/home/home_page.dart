@@ -97,7 +97,7 @@ class _HomePageState extends State<HomePage> {
                   }, 
                   style: buttonStyle,
                   child: Text('Заполнить форму для ДО',style: textStyle,),
-                  ),
+                ),
                 const SizedBox(height: 50),
                 ElevatedButton(
                   onPressed: _updateButtonClick, 

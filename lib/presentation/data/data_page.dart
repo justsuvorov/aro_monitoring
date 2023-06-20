@@ -59,6 +59,7 @@ class _DataPageState extends State<DataPage> {
     _doData = doData;
   ///
   _initializeData() async {
+    setState(() => _isLoading = true);
     _expanded = List.generate(_currentPerPage!, (index) => false);
     _doData.all().then((result) {
       result.fold(
@@ -77,6 +78,8 @@ class _DataPageState extends State<DataPage> {
           }
         ),
       );
+    }).whenComplete(() {
+      setState(() => _isLoading = false);
     });
   }
   ///
