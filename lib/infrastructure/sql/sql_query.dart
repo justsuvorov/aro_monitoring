@@ -1,6 +1,8 @@
 class SqlQuery {
   final String _sql;
-  SqlQuery({
+  ///
+  /// Prapares sql for some database
+  const SqlQuery({
     required String sql,
   }) :
     _sql = sql;

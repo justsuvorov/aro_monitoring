@@ -17,7 +17,7 @@ class MyApp extends StatelessWidget {
       ),
       home: const MyHomePage(
         title: 'Мониторинг АРО',
-        doList: doList,
+        depObjects: doList,
       ),
     );
   }

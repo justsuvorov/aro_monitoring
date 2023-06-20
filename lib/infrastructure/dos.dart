@@ -4,7 +4,7 @@ import 'package:aro_monitoring/infrastructure/sql/sql_query.dart';
 class DepObjects {
   final SqlQuery _sqlQuery;
   ///
-  DepObjects({
+  const DepObjects({
     required SqlQuery sqlQuery,
   }) :
     _sqlQuery = sqlQuery;

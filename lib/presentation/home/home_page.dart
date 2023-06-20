@@ -1,30 +1,39 @@
+import 'package:aro_monitoring/infrastructure/dos.dart';
 import 'package:aro_monitoring/presentation/data/data_page.dart';
 import 'package:aro_monitoring/presentation/data/widgets/monitoring_list.dart';
 import 'package:flutter/material.dart';
 
 class MyHomePage extends StatefulWidget {
   final String title;
-  final List<String> doList;
+  final DepObjects depObjects;
   ///
   const MyHomePage({
     super.key, 
     required this.title,
-    required this.doList,
+    required this.depObjects,
   });
   ///
   @override
   State<MyHomePage> createState() => _MyHomePageState(
-    doList: doList,
+    depObjects: depObjects,
   );
 }
 
 ///
 class _MyHomePageState extends State<MyHomePage> {
-  final List<String> doList;
+  final DepObjects _depObjects;
+  late List<String> _depList;
   ///
   _MyHomePageState({
-    required this.doList,
-  });
+    required DepObjects depObjects,
+  }) : 
+    _depObjects = depObjects;
+  ///
+  @override
+  void initState() {
+    _depList = _depObjects.all();
+    super.initState();
+  }
   ///
   void _updateButtonClick() {
     // TODO method to be implemented...
@@ -32,7 +41,7 @@ class _MyHomePageState extends State<MyHomePage> {
   ///
   @override
   Widget build(BuildContext context) {
-    String dropdownValue = doList.first;
+    String dropdownValue = _depList.first;
     var buttonStyle = const ButtonStyle(
       backgroundColor: MaterialStatePropertyAll<Color>(Color.fromARGB(255, 2, 108, 189)),
       minimumSize: MaterialStatePropertyAll<Size>(Size(800, 80)),
@@ -97,7 +106,7 @@ class _MyHomePageState extends State<MyHomePage> {
                       value: dropdownValue,
                       icon: const Icon(Icons.arrow_downward),         
                       selectedItemBuilder: (BuildContext context) {
-                        return doList.map((String value) {
+                        return _depList.map((String value) {
                           return Align(
                             alignment: Alignment.centerLeft,
                             child: Text(
@@ -111,7 +120,7 @@ class _MyHomePageState extends State<MyHomePage> {
                                   // This is called when the user selects an item.
                                   setState(() {dropdownValue = value!;});
                                 },
-                      items: doList.map<DropdownMenuItem<String>>((String value) {
+                      items: _depList.map<DropdownMenuItem<String>>((String value) {
                         return DropdownMenuItem<String>(
                           value: value,
                           child: Text(value, style: const TextStyle(fontFamily: 'GPN_DIN')),

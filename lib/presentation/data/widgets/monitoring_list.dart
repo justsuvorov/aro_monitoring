@@ -1,6 +1,7 @@
 import 'dart:math';
 
 import 'package:aro_monitoring/infrastructure/dos.dart';
+import 'package:aro_monitoring/infrastructure/sql/sql_query.dart';
 import 'package:aro_monitoring/presentation/core/widgets/drop_down_container.dart';
 import 'package:aro_monitoring/presentation/home/home_page.dart';
 import 'package:flutter/material.dart';
@@ -156,7 +157,9 @@ class _MonitoringListState extends State<MonitoringList> {
     MaterialPageRoute(
       builder: (context) => const MyHomePage(
         title: 'Мониторинг АРО',
-        doList: doList,
+        depObjects: DepObjects(
+          sqlQuery: SqlQuery(sql: 'Some real sql query to get required data'),
+        ),
       ),
     ),
   );},
@@ -164,7 +167,9 @@ class _MonitoringListState extends State<MonitoringList> {
             ListTile(
               leading: const Icon(Icons.storage),
               title: const Text("data"),
-              onTap: () {},
+              onTap: () {
+                // TODO onTap to be implemented...
+              },
             ),
           ],
         ),

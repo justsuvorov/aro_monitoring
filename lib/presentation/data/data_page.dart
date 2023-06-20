@@ -133,7 +133,7 @@ class _DataPageState extends State<DataPage> {
     MaterialPageRoute(
       builder: (context) => const MyHomePage(
         title: 'Мониторинг АРО',
-        doList: doList,
+        depObjects: doList,
       ),
     ),
   );},
