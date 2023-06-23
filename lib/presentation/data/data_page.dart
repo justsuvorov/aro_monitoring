@@ -1,3 +1,4 @@
+import 'package:aro_monitoring/infrastructure/api_address.dart';
 import 'package:aro_monitoring/infrastructure/dep_objects.dart';
 import 'package:aro_monitoring/infrastructure/do_data.dart';
 import 'package:aro_monitoring/infrastructure/sql/sql_query.dart';
@@ -35,10 +36,14 @@ class DataPage extends StatelessWidget {
                 Navigator.push(
                   context,
                   MaterialPageRoute(
-                    builder: (context) => const HomePage(
+                    builder: (context) => HomePage(
                       title: 'Мониторинг АРО',
                       depObjects: DepObjects(
-                        sqlQuery: SqlQuery(sql: 'Some real sql query to get required data'),
+                        address: ApiAddress(host: '127.0.0.1', port: 8899),
+                        sqlQuery: SqlQuery(
+                          authToken: 'auth-token-test',
+                          sql: 'SELECT * FROM dep-objects',
+                        ),
                       ),
                     ),
                   ),

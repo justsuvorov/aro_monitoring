@@ -12,7 +12,7 @@ class DoData {
   /// returns all stored D.. Objects
   Future<Result<List<Map<String, dynamic>>>> all() async {
     if (_sqlQuery.valid()) {
-      _sqlQuery.build();
+      _sqlQuery.buildJson();
       // TODO request to the sql source to be implemented...
     }
     return Future.delayed(

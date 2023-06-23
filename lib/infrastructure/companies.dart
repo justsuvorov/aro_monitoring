@@ -11,7 +11,7 @@ class Companies {
   /// returns all stored companies
   Map<String, String> all() {
     if (_sqlQuery.valid()) {
-      _sqlQuery.build();
+      _sqlQuery.buildJson();
       // TODO request to the sql source to be implemented...
     }
     return _companyNames;
