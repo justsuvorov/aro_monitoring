@@ -1,3 +1,4 @@
+import 'package:aro_monitoring/domain/core/error/failure.dart';
 import 'package:aro_monitoring/domain/core/result/result.dart';
 import 'package:aro_monitoring/infrastructure/api_address.dart';
 import 'package:aro_monitoring/infrastructure/api_request.dart';
@@ -41,7 +42,9 @@ class DepObjects {
       });
     }
     return Future.delayed(const Duration(milliseconds: 1200)).then((_) {
-      return const Result(data: _doList);
+      return Result(
+        error: Failure(message: '[DepObjects.all] error: SQL query is empty', stackTrace: StackTrace.current),
+      );
     });
   }  
 }
