@@ -107,7 +107,7 @@ class _HomePageState extends State<HomeBody> {
                         doData: DoData(
                           sqlQuery: SqlQuery(
                             authToken: 'auth-token-test',
-                            sql: 'SELECT * FROM dep-objects',
+                            sql: 'SELECT * FROM dep-objects;',
                           ),
                         ),
                       )),

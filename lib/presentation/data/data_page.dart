@@ -42,7 +42,7 @@ class DataPage extends StatelessWidget {
                         address: ApiAddress(host: '127.0.0.1', port: 8899),
                         sqlQuery: SqlQuery(
                           authToken: 'auth-token-test',
-                          sql: 'SELECT * FROM dep-objects',
+                          sql: 'SELECT * FROM dep-objects;',
                         ),
                       ),
                     ),
