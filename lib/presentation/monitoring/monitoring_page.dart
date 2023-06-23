@@ -29,20 +29,20 @@ class MonitoringPage extends StatelessWidget {
               leading: const Icon(Icons.home),
               title: const Text("home"),
               onTap: () {Navigator.push(
-    context,
-    MaterialPageRoute(
-      builder: (context) => HomePage(
-        title: 'Мониторинг АРО',
-        depObjects: DepObjects(
-          address: ApiAddress(host: '127.0.0.1', port: 8899),
-          sqlQuery: SqlQuery(
-            authToken: 'auth-token-test',
-            sql: 'SELECT * FROM dep-objects;',
-          ),
-        ),
-      ),
-    ),
-  );},
+              context,
+              MaterialPageRoute(
+                builder: (context) => HomePage(
+                  title: 'Мониторинг АРО',
+                  depObjects: DepObjects(
+                    address: ApiAddress.localhost(),
+                    sqlQuery: SqlQuery(
+                      authToken: 'auth-token-test',
+                      sql: 'SELECT * FROM dep-objects;',
+                    ),
+                  ),
+                ),
+              ),
+            );},
             ),
             ListTile(
               leading: const Icon(Icons.storage),

@@ -20,7 +20,7 @@ class MyApp extends StatelessWidget {
       home: HomePage(
         title: 'Мониторинг АРО',
         depObjects: DepObjects(
-          address: ApiAddress(host: '127.0.0.1', port: 8899),
+          address: ApiAddress.localhost(),
           sqlQuery: SqlQuery(
             authToken: 'auth-token-test',
             sql: 'SELECT * FROM `dep_objects`;',

@@ -1,3 +1,4 @@
+import 'package:aro_monitoring/infrastructure/api_address.dart';
 import 'package:aro_monitoring/infrastructure/dep_objects.dart';
 import 'package:aro_monitoring/infrastructure/do_data.dart';
 import 'package:aro_monitoring/infrastructure/sql/sql_query.dart';
@@ -105,10 +106,11 @@ class _HomePageState extends State<HomeBody> {
                       MaterialPageRoute(builder: (context) => DataPage(
                         title: "Форма заполнения мероприятий",
                         doData: DoData(
+                          address: ApiAddress.localhost(),
                           sqlQuery: SqlQuery(
                             authToken: 'auth-token-test',
-                            sql: 'SELECT * FROM dep-objects;',
-                          ),
+                            sql: 'SELECT * FROM do_data;',
+                          ), 
                         ),
                       )),
                     );

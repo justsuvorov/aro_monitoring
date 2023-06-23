@@ -7,14 +7,14 @@ class ApiReply {
   late String _authToken;
   late String _id;
   late String _sql;
-  late List<dynamic> _data;
+  late List<Map<String, dynamic>> _data;
   late List<String> _errors;
   ///
   ApiReply({
     required String authToken,
     required String id,
     required String sql,
-    required List<dynamic> data,
+    required List<Map<String, dynamic>> data,
     required List<String> errors,
   }) : 
     _authToken = authToken,
@@ -24,12 +24,18 @@ class ApiReply {
     _errors = errors;
   ///
   ApiReply.fromJson(String jsonString) {
-    _log.fine('.fromJson | jsonString: $jsonString');
+    // _log.fine('.fromJson | jsonString: $jsonString');
     final jsonMap = json.decode(jsonString);
+    _log.fine('.fromJson | jsonMap: $jsonMap');
     _authToken = jsonMap['auth_token'];
     _id = jsonMap['id'];
     _sql = jsonMap['sql'];
-    _data = jsonMap['data'];
+    _data = (jsonMap['data'] as List<dynamic>).map((e) {
+      return (e as Map<dynamic, dynamic>).map((key, value) => MapEntry(key.toString(), value));
+      // final key = (e as MapEntry).key;
+      // final value = (e as MapEntry).value;
+      // return MapEntry<String, dynamic>(key.toString(), value);
+    }).toList();
     _errors = (jsonMap['errors'] as List<dynamic>).map((e) => '$e').toList();
   }
   ///
@@ -39,7 +45,7 @@ class ApiReply {
   ///
   String get sql => _sql;
   ///
-  List<dynamic> get data => _data;
+  List<Map<String, dynamic>> get data => _data;
   ///
   List<String> get errors => _errors;
   ///

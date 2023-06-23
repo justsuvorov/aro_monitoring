@@ -4,7 +4,6 @@ import 'package:flutter/widgets.dart';
 import 'package:logging/logging.dart';
 
 
-// List companies = ['Все ДО', 'ГПН-Восток', 'ГПН-ННГ', 'ГПН-Оренбург', 'ГПН-Хантос', 'Мессояха', 'СН-МНГ'];
 void main() {
   Logger.root.level = Level.ALL;
   Logger.root.onRecord.listen((record) {

@@ -14,7 +14,7 @@ void main() {
     print('${record.level.name}: ${record.time} | ${record.loggerName}${record.message}');
   });
   final log = Logger('ApiRequestTest');
-  final apiAddress = ApiAddress(host: '127.0.0.1', port: 1111);// InternetAddress.loopbackIPv4;
+  const apiAddress = ApiAddress(host: '127.0.0.1', port: 1111);// InternetAddress.loopbackIPv4;
   late ServerSocket socketServer;
   // late ApiRequest apiRequest;
   setUp(() async {
