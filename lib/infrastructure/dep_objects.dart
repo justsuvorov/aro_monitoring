@@ -48,16 +48,3 @@ class DepObjects {
     });
   }  
 }
-
-/// 
-/// temporary representations of the databases data
-/// TODO to be deleted after database is connected
-const List<String> _doList = [
-  'Все ДО',
-  'ГПН-Восток',
-  'ГПН-ННГ',
-  'ГПН-Оренбург',
-  'ГПН-Хантос',
-  'Мессояха',
-  'СН-МНГ',
-];
