@@ -25,7 +25,7 @@ class DataBody extends StatefulWidget {
 ///
 ///
 class _DataPageState extends State<DataBody> {
-  final log = Logger('_DataPageState');
+  final _log = Logger('_DataPageState');
   final DoData _doData;
   // late List<DatatableHeader> _headers;
 
@@ -55,13 +55,15 @@ class _DataPageState extends State<DataBody> {
   }) :
     _doData = doData;
   ///
-  Future<void> _initializeData() {
+  Future<void> _initializeData() async {
+    _log.fine('._initializeData ...');
     _isLoading = true;
     if (mounted) {
       setState(() {return;});
     }
     _expanded = List.generate(_currentPerPage!, (index) => false);
     return _doData.all().then((result) {
+      _log.fine('._initializeData._doData.all | result: $result');
       result.fold(
         onData: (doData) {
           _sourceOriginal.clear();
@@ -74,7 +76,7 @@ class _DataPageState extends State<DataBody> {
         }, 
         onError: (
           (error) {
-            log.warning('._initializeData | error: $error');
+            _log.warning('._initializeData | error: $error');
           }
         ),
       );
@@ -118,7 +120,7 @@ class _DataPageState extends State<DataBody> {
       _expanded = List.generate(rangeTop, (index) => false);
       _source = _sourceFiltered.getRange(0, rangeTop).toList();
     } catch (e) {
-      log.warning('._filterData | error: e');
+      _log.warning('._filterData | error: e');
     }
     setState(() => _isLoading = false);
   }
@@ -126,7 +128,9 @@ class _DataPageState extends State<DataBody> {
   @override
   void initState() {
     super.initState();
+    Future.delayed(Duration.zero, () {
     _initializeData();
+    });
   }
   ///
   @override
@@ -231,7 +235,7 @@ class _DataPageState extends State<DataBody> {
                   return;
                 },
                 onTabRow: (data) {
-                  log.fine('build..onTabRow | data: $data');
+                  _log.fine('build..onTabRow | data: $data');
                 },
                 onSort: (value) {
                   setState(() => _isLoading = true);
@@ -260,7 +264,7 @@ class _DataPageState extends State<DataBody> {
                 sortColumn: _sortColumn,
                 isLoading: _isLoading,
                 onSelect: (value, item) {
-                  log.fine('build..onSelect | value: $value   item: $item');
+                  _log.fine('build..onSelect | value: $value   item: $item');
                   if (value!) {
                     setState(() => _selecteds.add(item));
                   } else {
