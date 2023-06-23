@@ -38,6 +38,7 @@ dependencies:
   sqflite: ^2.2.8+4
   responsive_table: ^0.2.0+2
   logging: ^1.2.0
+  uuid: ^3.0.7
 
 dev_dependencies:
   flutter_test:

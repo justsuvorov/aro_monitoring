@@ -41,9 +41,11 @@ class _HomePageState extends State<HomeBody> {
     _depObjects.all().then((result) {
       result.fold(
         onData: (depList) {
-          _depList.clear();
-          _depList.addAll(depList);
-          dropdownValue = _depList.first;
+          if (depList.isNotEmpty) {
+            _depList.clear();
+            _depList.addAll(depList);
+            dropdownValue = _depList.first;
+          }
         }, 
         onError: (
           (error) {
@@ -100,10 +102,13 @@ class _HomePageState extends State<HomeBody> {
                   onPressed: (){
                     Navigator.push(
                       context,
-                      MaterialPageRoute(builder: (context) => const DataPage(
+                      MaterialPageRoute(builder: (context) => DataPage(
                         title: "Форма заполнения мероприятий",
                         doData: DoData(
-                          sqlQuery: SqlQuery(sql: 'some real sql query to get such data'),
+                          sqlQuery: SqlQuery(
+                            authToken: 'auth-token-test',
+                            sql: 'SELECT * FROM dep-objects;',
+                          ),
                         ),
                       )),
                     );
