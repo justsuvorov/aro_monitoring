@@ -19,7 +19,6 @@ class DoData {
   /// returns all stored D.. Objects
   Future<Result<List<Map<String, dynamic>>>> all() async {
     if (_sqlQuery.valid()) {
-      _sqlQuery.buildJson();
       final apiRequest = ApiRequest(
         address: _address, 
         sqlQuery: _sqlQuery,
