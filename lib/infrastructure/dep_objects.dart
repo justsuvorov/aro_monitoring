@@ -31,7 +31,7 @@ class DepObjects {
           onData: (apiReply) {
             final data = apiReply.data.map((row) {
               _log.fine('.all | row: $row');
-              return row.toString();
+              return row['name'].toString();
             });
             return Result(data: data.toList());
           }, 
@@ -41,7 +41,7 @@ class DepObjects {
         );
       });
     }
-    return Future.delayed(const Duration(milliseconds: 1200)).then((_) {
+    return Future.delayed(const Duration(milliseconds: 100)).then((_) {
       return Result(
         error: Failure(message: '[DepObjects.all] error: SQL query is empty', stackTrace: StackTrace.current),
       );
