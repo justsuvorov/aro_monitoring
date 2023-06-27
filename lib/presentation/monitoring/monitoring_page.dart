@@ -1,7 +1,6 @@
 import 'package:aro_monitoring/infrastructure/api_address.dart';
 import 'package:aro_monitoring/infrastructure/dep_objects.dart';
 import 'package:aro_monitoring/infrastructure/do_data.dart';
-import 'package:aro_monitoring/infrastructure/dep_objects.dart';
 import 'package:aro_monitoring/infrastructure/sql/sql_query.dart';
 import 'package:aro_monitoring/presentation/home/home_page.dart';
 import 'package:aro_monitoring/presentation/monitoring/widgets/monitoring_body.dart';
@@ -41,6 +40,7 @@ class MonitoringPage extends StatelessWidget {
                     address: ApiAddress.localhost(),
                     sqlQuery: SqlQuery(
                       authToken: 'auth-token-test',
+                      database: 'database',
                       sql: 'SELECT * FROM dep_objects;',
                     ),
                   ),

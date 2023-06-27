@@ -5,14 +5,17 @@ import 'package:uuid/uuid.dart';
 class SqlQuery {
   final String _authToken;
   late String _id;
+  final String _database;
   final String _sql;
   ///
   /// Prapares sql for some database
   SqlQuery({
     required String authToken,
+    required String database,
     required String sql,
   }) :
     _authToken = authToken,
+    _database = database,
     _sql = sql;
   ///
   bool valid() {
@@ -25,7 +28,10 @@ class SqlQuery {
     final jsonString = json.encode({
       'auth_token': _authToken,
       'id': _id,
-      'sql': _sql,
+      'sql': {
+        'database': _database,
+        'sql': _sql,
+      },
     });
     return jsonString;
   }

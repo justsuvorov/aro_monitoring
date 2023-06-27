@@ -23,6 +23,7 @@ class MyApp extends StatelessWidget {
           address: ApiAddress.localhost(),
           sqlQuery: SqlQuery(
             authToken: 'auth-token-test',
+            database: 'database',
             sql: 'SELECT * FROM `dep_objects`;',
           ),
         ),
