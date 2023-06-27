@@ -27,7 +27,7 @@ class _HomePageState extends State<HomeBody> {
   final DepObjects _depObjects;
   static const _dropdownEmptyValue = 'По всем';
   final List<String> _depList = [_dropdownEmptyValue];
-  String dropdownValue = _dropdownEmptyValue;
+  int dropdownValue = 0;
   bool _isLoading = false;
   ///
   _HomePageState({
@@ -46,7 +46,7 @@ class _HomePageState extends State<HomeBody> {
             _depList.clear();
             _depList.add(_dropdownEmptyValue);
             _depList.addAll(depList);
-            dropdownValue = _depList.first;
+            dropdownValue = 0;
           }
         }, 
         onError: (
@@ -88,10 +88,8 @@ class _HomePageState extends State<HomeBody> {
         child: Wrap(
           children: [
             Column(
-              mainAxisAlignment: MainAxisAlignment.start,
+              mainAxisAlignment: MainAxisAlignment.center,
               children: [
-                const SizedBox(height: 50),                
-                const SizedBox(height: 50),
                 ElevatedButton(
                   onPressed: _updateButtonClick,
                   style: buttonStyle, 
@@ -113,7 +111,7 @@ class _HomePageState extends State<HomeBody> {
                   children: [
                     Text("Выбор ДО", style: textStyle),  
                     const SizedBox(width: 100),
-                    DropdownButton<String>(
+                    DropdownButton<int>(
                       value: dropdownValue,
                       icon: const Icon(Icons.arrow_downward),         
                       selectedItemBuilder: (BuildContext context) {
@@ -121,22 +119,24 @@ class _HomePageState extends State<HomeBody> {
                           return Align(
                             alignment: Alignment.centerLeft,
                             child: Text(
-                              dropdownValue,
+                              _depList[dropdownValue],
                               style: const TextStyle(color: Colors.white, fontFamily: 'GPN_DIN', fontSize: 20),
                             ),
                           );
                         }).toList();
                       },
-                      onChanged: (String? value) {
-                        // This is called when the user selects an item.
+                      onChanged: (int? value) {
                         setState(() {dropdownValue = value!;});
                       },
-                      items: _depList.map<DropdownMenuItem<String>>((String value) {
-                        return DropdownMenuItem<String>(
-                          value: value,
-                          child: Text(value, style: const TextStyle(fontFamily: 'GPN_DIN')),
+                      items: List<DropdownMenuItem<int>>.generate(_depList.length, (int index) {
+                        return DropdownMenuItem<int>(
+                          value: index,
+                          child: Text(
+                            _depList[index], 
+                            style: const TextStyle(fontFamily: 'GPN_DIN'),
+                          ),
                         );
-                      }).toList(),
+                      }),
                     ),
                   ],
                 ),
@@ -152,7 +152,9 @@ class _HomePageState extends State<HomeBody> {
                           sqlQuery: SqlQuery(
                             authToken: 'auth-token-test',
                             database: 'database',
-                            sql: 'SELECT * FROM do_data WHERE company  = \'$dropdownValue\';',
+                            sql: dropdownValue == 0 
+                              ? 'SELECT * FROM do_data'
+                              : 'SELECT * FROM do_data WHERE company = \'$dropdownValue\'',
                           ), 
                         ),
                       )),
@@ -175,7 +177,9 @@ class _HomePageState extends State<HomeBody> {
                             sqlQuery: SqlQuery(
                               authToken: 'auth-token-test',
                               database: 'database',
-                              sql: 'SELECT * FROM do_data WHERE company = \'$dropdownValue\'',
+                              sql: dropdownValue == 0 
+                                ? 'SELECT * FROM do_data'
+                                : 'SELECT * FROM do_data WHERE company = \'$dropdownValue\'',
                               ),
                             ),
                           ),
@@ -184,7 +188,6 @@ class _HomePageState extends State<HomeBody> {
                   },  
                   style: buttonStyle,
                   child: Text('Просмотр таблицы нерентабельных объектов', style: textStyle,),
-                  
                 ),
               ],
             ),
