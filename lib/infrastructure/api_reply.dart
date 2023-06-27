@@ -6,14 +6,14 @@ class ApiReply {
   final _log = Logger('ApiReply');
   late String _authToken;
   late String _id;
-  late String _sql;
+  late Map<String, String> _sql;
   late List<Map<String, dynamic>> _data;
   late List<String> _errors;
   ///
   ApiReply({
     required String authToken,
     required String id,
-    required String sql,
+    required Map<String, String> sql,
     required List<Map<String, dynamic>> data,
     required List<String> errors,
   }) : 
@@ -29,7 +29,7 @@ class ApiReply {
     _log.fine('.fromJson | jsonMap: $jsonMap');
     _authToken = jsonMap['auth_token'];
     _id = jsonMap['id'];
-    _sql = jsonMap['sql'];
+    _sql = jsonMap['sql'] ?? {};
     _data = (jsonMap['data'] as List<dynamic>).map((e) {
       return (e as Map<dynamic, dynamic>).map((key, value) => MapEntry(key.toString(), value));
       // final key = (e as MapEntry).key;
@@ -43,7 +43,7 @@ class ApiReply {
   ///
   String get id => _id;
   ///
-  String get sql => _sql;
+  Map<String, String> get sql => _sql;
   ///
   List<Map<String, dynamic>> get data => _data;
   ///
@@ -60,15 +60,3 @@ class ApiReply {
 \t}''';
   }
 }
-
-const j = {
-    "auth_token": "123zxy456!@#",
-    "id": 123,
-    "sql": "Some valid sql query",
-    "data": [
-
-    ],
-    "errors": [
-
-    ],
-};

@@ -25,7 +25,7 @@ class HomeBody extends StatefulWidget {
 class _HomePageState extends State<HomeBody> {
   final log = Logger('_HomePageState');
   final DepObjects _depObjects;
-  static const _dropdownEmptyValue = ' - ';
+  static const _dropdownEmptyValue = 'По всем';
   final List<String> _depList = [_dropdownEmptyValue];
   String dropdownValue = _dropdownEmptyValue;
   bool _isLoading = false;
@@ -44,6 +44,7 @@ class _HomePageState extends State<HomeBody> {
         onData: (depList) {
           if (depList.isNotEmpty) {
             _depList.clear();
+            _depList.add(_dropdownEmptyValue);
             _depList.addAll(depList);
             dropdownValue = _depList.first;
           }
@@ -141,7 +142,7 @@ class _HomePageState extends State<HomeBody> {
                 ),
                 const SizedBox(height: 50),
                 ElevatedButton(
-                  onPressed: (){
+                  onPressed: () {
                     Navigator.push(
                       context,
                       MaterialPageRoute(builder: (context) => DataPage(
