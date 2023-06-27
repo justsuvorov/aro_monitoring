@@ -154,7 +154,7 @@ class _HomePageState extends State<HomeBody> {
                             database: 'database',
                             sql: dropdownValue == 0 
                               ? 'SELECT * FROM do_data'
-                              : 'SELECT * FROM do_data WHERE company = \'$dropdownValue\'',
+                              : 'SELECT * FROM do_data WHERE `company` like \'${_depList[dropdownValue]}\'',
                           ), 
                         ),
                       )),
@@ -179,7 +179,7 @@ class _HomePageState extends State<HomeBody> {
                               database: 'database',
                               sql: dropdownValue == 0 
                                 ? 'SELECT * FROM do_data'
-                                : 'SELECT * FROM do_data WHERE company = \'$dropdownValue\'',
+                                : 'SELECT * FROM do_data WHERE company like \'${_depList[dropdownValue]}\'',
                               ),
                             ),
                           ),
