@@ -1,23 +1,31 @@
 import 'dart:math';
-
+import 'package:aro_monitoring/infrastructure/do_data.dart';
 import 'package:aro_monitoring/presentation/core/widgets/drop_down_container.dart';
 import 'package:flutter/material.dart';
 import 'package:logging/logging.dart';
 import 'package:responsive_table/responsive_table.dart';
+import 'package:logging/logging.dart';
 
 ///
 class MonitoringBody extends StatefulWidget {
+  final DoData _doData;
+
+
   ///
-  const MonitoringBody({Key? key}) : super(key: key);
+  const MonitoringBody({Key? key,
+   required DoData doData,}) : 
+  _doData = doData,
+  super(key: key);
   @override
-  State<MonitoringBody> createState() => _MonitoringPageState();
+  State<MonitoringBody> createState() => _MonitoringPageState(doData: _doData,);
 }
 ///
 ///
 class _MonitoringPageState extends State<MonitoringBody> {
     final log = Logger('_MonitoringListState');
+    final DoData _doData;
   // late List<DatatableHeader> _headers;
-
+  
   final List<int> _perPages = [10, 20, 50, 100];
   int _total = 100;
   int? _currentPerPage = 10;
@@ -39,47 +47,41 @@ class _MonitoringPageState extends State<MonitoringBody> {
   final bool _showSelect = true;
   final random = Random();
 
-  List<Map<String, dynamic>> _generateData({int n = 10}) {
-    final List source = List.filled(n, 10);
-    List<Map<String, dynamic>> temps = [];
-    var i = 1;
-    log.fine('._generateData | i: $i');
-    // ignore: unused_local_variable
-    for (var data in source) {
-      temps.add({
-        "id": i,
-        "id_aro": "230$i",
-        "obj_type": "Cкважина",
-        "well_name": "10$i",
-        "well_group_name": "$i",
-        "preparation_obj_name": "ДНС-2 Еты-Пуровское",
-        "field_name": "Еты-Пуровское",
-        "company_name": "ГПН-ННГ",
-        "date_creation": "20.03.2023",
-        "status": "Нерентабельная",
-        "status_mer": "В работе",
+  _MonitoringPageState({
+    required DoData doData,
+  }) :
+    _doData = doData;
 
-      });
-      i++;
+  Future<void> _initializeData() async {
+    log.fine('._initializeData ...');
+    _isLoading = true;
+    if (mounted) {
+      setState(() {return;});
     }
-    return temps;
-  }
-
-  _initializeData() async {
-    _mockPullData();
-  }
-
-  _mockPullData() async {
     _expanded = List.generate(_currentPerPage!, (index) => false);
-
-    setState(() => _isLoading = true);
-    Future.delayed(const Duration(seconds: 3)).then((value) {
-      _sourceOriginal.clear();
-      _sourceOriginal.addAll(_generateData(n: 15));
-      _sourceFiltered = _sourceOriginal;
-      _total = _sourceFiltered.length;
-      _source = _sourceFiltered.getRange(0, _currentPerPage!).toList();
-      setState(() => _isLoading = false);
+    return _doData.all().then((result) {
+      log.fine('._initializeData._doData.all | result: $result');
+      result.fold(
+        onData: (doData) {
+          _sourceOriginal.clear();
+          _sourceOriginal.addAll(
+            doData,
+          );
+          _sourceFiltered = _sourceOriginal;
+          _total = _sourceFiltered.length;
+          _source = _sourceFiltered.getRange(0, _currentPerPage!).toList();
+        }, 
+        onError: (
+          (error) {
+            log.warning('._initializeData | error: $error');
+          }
+        ),
+      );
+    }).whenComplete(() {
+      _isLoading = false;
+      if (mounted) {
+        setState(() {return;});
+      }
     });
   }
 
@@ -123,7 +125,9 @@ class _MonitoringPageState extends State<MonitoringBody> {
   @override
   void initState() {
     super.initState();
+    Future.delayed(Duration.zero, () {
     _initializeData();
+    });
   }
 
   @override

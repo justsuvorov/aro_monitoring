@@ -62,6 +62,7 @@ class _HomePageState extends State<HomeBody> {
   }
   ///
   void _updateButtonClick() {
+    
     // TODO method to be implemented...
   }
   ///
@@ -98,26 +99,7 @@ class _HomePageState extends State<HomeBody> {
                     style: textStyle,
                   ),
                 ),
-                const SizedBox(height: 50),
-                ElevatedButton(
-                  onPressed: (){
-                    Navigator.push(
-                      context,
-                      MaterialPageRoute(builder: (context) => DataPage(
-                        title: "Форма заполнения мероприятий",
-                        doData: DoData(
-                          address: ApiAddress.localhost(),
-                          sqlQuery: SqlQuery(
-                            authToken: 'auth-token-test',
-                            sql: 'SELECT * FROM do_data;',
-                          ), 
-                        ),
-                      )),
-                    );
-                  }, 
-                  style: buttonStyle,
-                  child: Text('Заполнить форму для ДО',style: textStyle,),
-                ),
+                
                 const SizedBox(height: 50),
                 ElevatedButton(
                   onPressed: _updateButtonClick, 
@@ -162,8 +144,38 @@ class _HomePageState extends State<HomeBody> {
                   onPressed: (){
                     Navigator.push(
                       context,
+                      MaterialPageRoute(builder: (context) => DataPage(
+                        title: "Форма заполнения мероприятий",
+                        doData: DoData(
+                          address: ApiAddress.localhost(),
+                          sqlQuery: SqlQuery(
+                            authToken: 'auth-token-test',
+                            sql: 'SELECT * FROM do_data WHERE company  = \'$dropdownValue\';',
+                          ), 
+                        ),
+                      )),
+                    );
+                  }, 
+                  style: buttonStyle,
+                  child: Text('Заполнить форму для ДО',style: textStyle,),
+                ),
+                const SizedBox(height: 50),
+                
+                ElevatedButton(
+                  onPressed: (){
+                    Navigator.push(
+                      context,
                       MaterialPageRoute(
-                        builder: (context) =>  const MonitoringPage(title: "Форма заполнения мероприятий"),
+                        builder: (context) =>  MonitoringPage(
+                          title: "Таблица нерентабельных объектов", 
+                          doData: DoData(
+                            address: ApiAddress.localhost(),
+                            sqlQuery: SqlQuery(
+                              authToken: 'auth-token-test',
+                              sql: 'SELECT * FROM do_data WHERE company = \'$dropdownValue\'',
+                              ),
+                            ),
+                          ),
                       ),
                     );
                   },  

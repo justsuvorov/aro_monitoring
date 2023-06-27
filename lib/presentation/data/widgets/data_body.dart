@@ -125,6 +125,20 @@ class _DataPageState extends State<DataBody> {
     setState(() => _isLoading = false);
   }
 
+  _update_db_table(){
+    List keys = ['activity', 'comment', 'date_planning', 'date_fact', 'responsible_person', 'obj_status', 'failure'];
+    int k = 0;
+    for (final i in _source){
+
+      int id = i['id'];
+      for (String column in keys){
+        String str = i[column];
+        String sqlQuery = 'UPDATE do_data SET \'$column\' = \'$str\' WHERE id = $id';
+        _doData.load_to_db(sqlQuery);}
+
+      ;};
+  }
+
   @override
   void initState() {
     super.initState();
@@ -158,11 +172,12 @@ class _DataPageState extends State<DataBody> {
               child: ResponsiveDatatable(
                 title: TextButton.icon(
                   onPressed: () {
-                    // TODO onPress to be implemented
+                    _update_db_table();
+                    print('Load to db');
                     return;
                   },
                   icon: const Icon(Icons.add),
-                  label: const Text("new item"),
+                  label: const Text("Добавить мероприятия в базу"),
                 ),
                 reponseScreenSizes: const [ScreenSize.xs],
                 actions: [
@@ -170,7 +185,7 @@ class _DataPageState extends State<DataBody> {
                     Expanded(
                       child: TextField(
                         decoration: InputDecoration(
-                            hintText: 'Enter search term based on ${
+                            hintText: 'Поиск объектов по ${
                               _searchKey!
                                 .replaceAll(RegExp('[\\W_]+'), ' ')
                                 .toUpperCase()
@@ -223,14 +238,12 @@ class _DataPageState extends State<DataBody> {
                   return DropDownContainer(data: data);
                 },
                 onChangedRow: (value, header) {
-                  /// print(value);
-                  /// print(header);
+
                   // TODO onPress to be implemented
                   return;
                 },
                 onSubmittedRow: (value, header) {
-                  /// print(value);
-                  /// print(header);
+
                   // TODO onPress to be implemented
                   return;
                 },
@@ -283,7 +296,7 @@ class _DataPageState extends State<DataBody> {
                 footers: [
                   Container(
                     padding: const EdgeInsets.symmetric(horizontal: 15),
-                    child: const Text("Rows per page:"),
+                    child: const Text("Кол-во объектов на странице:"),
                   ),
                   if (_perPages.isNotEmpty)
                     Container(
@@ -379,7 +392,6 @@ final _headers = [
     text: "Тип объекта",
     value: "name",
     show: true,
-    flex: 2,
     sortable: true,
     textAlign: TextAlign.left,
   ),
@@ -424,6 +436,7 @@ final _headers = [
     show: true,
     editable: true,
     sortable: true,
+    
     textAlign: TextAlign.left,
   ),
   DatatableHeader(

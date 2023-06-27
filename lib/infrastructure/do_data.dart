@@ -46,4 +46,34 @@ class DoData {
       );
     });
   }  
+Future<Result<List<Map<String, dynamic>>>> load_to_db(String sql_query_string) async {
+    SqlQuery sqlQuery = SqlQuery(authToken: 'auth-token-test', sql: sql_query_string);
+    if (sqlQuery.valid()) {
+      final apiRequest = ApiRequest(
+        address: _address, 
+        sqlQuery: sqlQuery,
+      );
+      return apiRequest.fetch().then((result) {
+        _log.fine('.all | result: $result');
+        return result.fold(
+          onData: (apiReply) {
+            final data = apiReply.data.map((row) {
+              _log.fine('.all | row: $row');
+              return row['name'].toString();
+            });
+            return Result(data: apiReply.data);
+          }, 
+          onError: (error) {
+            return Result(error: error);
+          },
+        );
+      });
+    }
+    return Future.delayed(const Duration(milliseconds: 100)).then((_) {
+      return Result(
+        error: Failure(message: '[DoData.all] error: SQL query is empty', stackTrace: StackTrace.current),
+      );
+    });
+  }  
+
 }
