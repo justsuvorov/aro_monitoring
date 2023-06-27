@@ -39,6 +39,7 @@ void main() {
         address: apiAddress,
         sqlQuery: SqlQuery(
           authToken: 'auth-token-test',
+          database: 'database',
           sql: queryStr,
         ),
       );
@@ -50,6 +51,7 @@ void main() {
         address: apiAddress,
         sqlQuery: SqlQuery(
           authToken: 'auth-token-test',
+          database: 'database',
           sql: sql,
         ),
       );
