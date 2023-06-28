@@ -156,7 +156,7 @@ class _MonitoringPageState extends State<MonitoringBody> {
                 title: TextButton.icon(
                   onPressed: () => {},
                   icon: const Icon(Icons.add),
-                  label: const Text("new item"),
+                  label: const Text("new item", style: TextStyle(fontFamily:  'GPN_DIN'),),
                 ),
                 reponseScreenSizes: const [ScreenSize.xs],
                 actions: [
@@ -208,6 +208,7 @@ class _MonitoringPageState extends State<MonitoringBody> {
                 ],
                 headers: _headers,
                 source: _source,
+            
                 selecteds: _selecteds,
                 showSelect: _showSelect,
                 autoHeight: false,
@@ -352,8 +353,8 @@ class _MonitoringPageState extends State<MonitoringBody> {
                   ),
                   color: Colors.green,
                 ),
-                headerTextStyle: const TextStyle(color: Colors.white),
-                rowTextStyle: const TextStyle(color: Colors.green),
+                headerTextStyle: const TextStyle(color: Colors.white, fontFamily: 'GPN_DIN'),
+                rowTextStyle: const TextStyle(color: Colors.green, fontFamily: 'GPN_DIN'),
                 selectedTextStyle: const TextStyle(color: Colors.white),
               ),
             ),
@@ -386,7 +387,7 @@ final _headers = [
     show: true,
     flex: 2,
     sortable: true,
-    textAlign: TextAlign.left,
+    textAlign: TextAlign.center,
   ),
   DatatableHeader(
     text: "Скважина",
@@ -400,51 +401,54 @@ final _headers = [
     value: "well_group_name",
     show: true,
     sortable: true,
-    textAlign: TextAlign.left,
+    textAlign: TextAlign.center,
   ),
   DatatableHeader(
     text: "Объект подготовки",
     value: "preparation_obj_name",
     show: true,
     sortable: true,
-    textAlign: TextAlign.left,
+    textAlign: TextAlign.center,
   ),
   DatatableHeader(
     text: "Месторождение",
     value: "field_name",
     show: true,
     sortable: true,
-    textAlign: TextAlign.left,
+    textAlign: TextAlign.center,
   ),
   DatatableHeader(
     text: "ДО",
-    value: "company_name",
+    value: "compnay_name",
     show: true,
     sortable: true,
-    textAlign: TextAlign.left,
+    textAlign: TextAlign.center
   ),
   DatatableHeader(
     text: "Дата внесения",
     value: "date_creation",
     show: true,
-    editable: true,
+    editable: false,
     sortable: false,
     textAlign: TextAlign.center,
+    
   ),
   DatatableHeader(
     text: "Статус",
     value: "status",
     show: true,
-    editable: true,
+    editable: false,
     sortable: false,
     textAlign: TextAlign.center,
+    
   ),
   DatatableHeader(
     text: "Статус МЭР",
     value: "status_mer",
     show: true,
-    editable: true,
+    editable: false,
     sortable: false,
     textAlign: TextAlign.center,
   ),
 ];
+

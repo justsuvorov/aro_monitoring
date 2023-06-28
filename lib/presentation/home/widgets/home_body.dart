@@ -172,7 +172,7 @@ class _HomePageState extends State<HomeBody> {
                             address: ApiAddress.localhost(),
                             sqlQuery: SqlQuery(
                               authToken: 'auth-token-test',
-                              sql: 'SELECT * FROM do_data WHERE company = \'$dropdownValue\'',
+                              sql: 'SELECT * FROM monitoring WHERE compnay_name = \'$dropdownValue\'',
                               ),
                             ),
                           ),
