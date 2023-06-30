@@ -57,6 +57,8 @@ class DoData {
     return Future.delayed(const Duration(milliseconds: 100));
   }
   ///
+  /// depricated method
+  /// this functional must be repleced with method insert & update
   Future<Result<List<Map<String, dynamic>>>> loadToDb(String sqlQueryString) async {
     SqlQuery sqlQuery = SqlQuery(
       authToken: 'auth-token-test', 
