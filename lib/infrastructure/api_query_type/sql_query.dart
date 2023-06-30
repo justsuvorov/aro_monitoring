@@ -1,8 +1,9 @@
 import 'dart:convert';
 
+import 'package:aro_monitoring/infrastructure/api_query_type/api_query_type.dart';
 import 'package:uuid/uuid.dart';
 
-class SqlQuery {
+class SqlQuery implements ApiQueryType {
   final String _authToken;
   late String _id;
   final String _database;
@@ -18,11 +19,13 @@ class SqlQuery {
     _database = database,
     _sql = sql;
   ///
+  @override
   bool valid() {
     return true;
     /// some simplest sql syntax validation to be implemented
   }
   ///
+  @override
   String buildJson() {
     _id = const Uuid().v1();
     final jsonString = json.encode({
@@ -36,8 +39,10 @@ class SqlQuery {
     return jsonString;
   }
   ///
+  @override
   String get authToken => _authToken;
   ///
+  @override
   String get id => _id;
   ///
   String get database => _database;

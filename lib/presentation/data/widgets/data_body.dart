@@ -1,6 +1,10 @@
 import 'dart:math';
 
+import 'package:aro_monitoring/infrastructure/api_address.dart';
+import 'package:aro_monitoring/infrastructure/api_request.dart';
 import 'package:aro_monitoring/infrastructure/do_data.dart';
+import 'package:aro_monitoring/infrastructure/api_query_type/python_query.dart';
+import 'package:aro_monitoring/infrastructure/api_query_type/sql_query.dart';
 import 'package:aro_monitoring/presentation/core/widgets/drop_down_container.dart';
 import 'package:flutter/material.dart';
 import 'package:logging/logging.dart';
@@ -235,6 +239,25 @@ class _DataPageState extends State<DataBody> {
                     )
                   else 
                     const Icon(Icons.replay),
+                  // TODO To be deleted, Testing python-script API service
+                  IconButton(
+                    onPressed: () {
+                      final apiRequest = ApiRequest(
+                        address: const ApiAddress(host: '127.0.0.1', port: 8899), 
+                        sqlQuery: PythonQuery(
+                          authToken: 'authToken', 
+                          script: 'py-test', 
+                          params: 'py-test-params',
+                        ),
+                      );
+                      apiRequest
+                        .fetch()
+                        .then((reply) {
+                          _log.fine('python-script test | reply: $reply');
+                        });
+                    }, 
+                    icon: const Icon(Icons.lightbulb_outline_rounded),
+                  ),
                 ],
                 headers: _headers,
                 source: _source,
