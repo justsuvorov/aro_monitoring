@@ -53,7 +53,7 @@ class DoData {
   }
   ///
   Future<Result<List<Map<String, dynamic>>>> insert(String sql) async {
-    // TODO insert new rec into the database to be implemented
+    // TODO update rec in the database to be implemented
     return Future.delayed(const Duration(milliseconds: 100));
   }
   ///
