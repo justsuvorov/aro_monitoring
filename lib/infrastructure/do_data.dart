@@ -48,17 +48,15 @@ class DoData {
     });
   }
   ///
-  /// posible implementation: Update By Id
-  ///   SQL: UPDATE do_data SET \'$column\' = \'$str\' WHERE id = $id';
-  /// 
+  /// updates single field [value] in the record with specified [id]
   Future<Result<ApiReply>> update(String id, String field, String value) async {
     // TODO insert new rec into the database to be implemented
-    String sql = 'UPDATE do_data SET \'$column\' = \'$str\' WHERE id = $id';
+    String sql = 'UPDATE `do_data` SET \'$field\' = \'$value\' WHERE id = $id';
     final apiRequest = ApiRequest(
       address: _address, 
       sqlQuery: SqlQuery(
-        authToken: _sqlQuery. authToken, 
-        database: database, 
+        authToken: _sqlQuery.authToken, 
+        database: _sqlQuery.database, 
         sql: sql,
       ),
     );
