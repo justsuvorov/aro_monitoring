@@ -35,4 +35,10 @@ class SqlQuery {
     });
     return jsonString;
   }
+  ///
+  String get authToken => _authToken;
+  ///
+  String get id => _id;
+  ///
+  String get database => _database;
 }

@@ -124,6 +124,7 @@ class _DataPageState extends State<DataBody> {
   }
 
   _updateDbTable() {
+    // TODO this field names must be implemented in the sql-speacing object (DoData) 
     List keys = ['activity', 'comment', 'date_planning', 'date_fact', 'responsible_person', 'obj_status', 'failure'];
     int k = 0;
     for (final i in _source) {

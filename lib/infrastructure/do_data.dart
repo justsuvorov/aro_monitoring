@@ -1,6 +1,7 @@
 import 'package:aro_monitoring/domain/core/error/failure.dart';
 import 'package:aro_monitoring/domain/core/result/result.dart';
 import 'package:aro_monitoring/infrastructure/api_address.dart';
+import 'package:aro_monitoring/infrastructure/api_reply.dart';
 import 'package:aro_monitoring/infrastructure/api_request.dart';
 import 'package:aro_monitoring/infrastructure/sql/sql_query.dart';
 import 'package:logging/logging.dart';
@@ -47,9 +48,21 @@ class DoData {
     });
   }
   ///
-  Future<Result<List<Map<String, dynamic>>>> update(String sql) async {
+  /// posible implementation: Update By Id
+  ///   SQL: UPDATE do_data SET \'$column\' = \'$str\' WHERE id = $id';
+  /// 
+  Future<Result<ApiReply>> update(String id, String field, String value) async {
     // TODO insert new rec into the database to be implemented
-    return Future.delayed(const Duration(milliseconds: 100));
+    String sql = 'UPDATE do_data SET \'$column\' = \'$str\' WHERE id = $id';
+    final apiRequest = ApiRequest(
+      address: _address, 
+      sqlQuery: SqlQuery(
+        authToken: _sqlQuery. authToken, 
+        database: database, 
+        sql: sql,
+      ),
+    );
+    return apiRequest.fetch();
   }
   ///
   Future<Result<List<Map<String, dynamic>>>> insert(String sql) async {
