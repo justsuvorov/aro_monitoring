@@ -46,11 +46,11 @@ class DoData {
       );
     });
   }  
-Future<Result<List<Map<String, dynamic>>>> load_to_db(String sql_query_string) async {
+Future<Result<List<Map<String, dynamic>>>> loadToDb(String sqlQueryString) async {
     SqlQuery sqlQuery = SqlQuery(
       authToken: 'auth-token-test', 
       database: 'database',
-      sql: sql_query_string
+      sql: sqlQueryString,
     );
     if (sqlQuery.valid()) {
       final apiRequest = ApiRequest(

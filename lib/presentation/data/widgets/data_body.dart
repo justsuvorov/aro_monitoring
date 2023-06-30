@@ -125,18 +125,17 @@ class _DataPageState extends State<DataBody> {
     setState(() => _isLoading = false);
   }
 
-  _update_db_table(){
+  _updateDbTable(){
     List keys = ['activity', 'comment', 'date_planning', 'date_fact', 'responsible_person', 'obj_status', 'failure'];
     int k = 0;
-    for (final i in _source){
-
+    for (final i in _source) {
       int id = i['id'];
-      for (String column in keys){
+      for (String column in keys) {
         String str = i[column];
         String sqlQuery = 'UPDATE do_data SET \'$column\' = \'$str\' WHERE id = $id';
-        _doData.load_to_db(sqlQuery);}
-
-      ;};
+        _doData.loadToDb(sqlQuery);
+      }
+    }
   }
 
   @override
@@ -177,8 +176,8 @@ class _DataPageState extends State<DataBody> {
               child: ResponsiveDatatable(
                 title: TextButton.icon(
                   onPressed: () {
-                    _update_db_table();
-                    print('Load to db');
+                    _updateDbTable();
+                    _log.fine('Load to db');
                     return;
                   },
                   icon: const Icon(Icons.add),
