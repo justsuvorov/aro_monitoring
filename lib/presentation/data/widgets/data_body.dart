@@ -247,7 +247,7 @@ class _DataPageState extends State<DataBody> {
                         sqlQuery: PythonQuery(
                           authToken: 'authToken', 
                           script: 'py-test', 
-                          params: 'py-test-params',
+                          params: '{"a": 5, "b":10}',
                         ),
                       );
                       apiRequest
