@@ -47,6 +47,16 @@ class DoData {
     });
   }
   ///
+  Future<Result<List<Map<String, dynamic>>>> update(String sql) async {
+    // TODO insert new rec into the database to be implemented
+    return Future.delayed(const Duration(milliseconds: 100));
+  }
+  ///
+  Future<Result<List<Map<String, dynamic>>>> insert(String sql) async {
+    // TODO insert new rec into the database to be implemented
+    return Future.delayed(const Duration(milliseconds: 100));
+  }
+  ///
   Future<Result<List<Map<String, dynamic>>>> loadToDb(String sqlQueryString) async {
     SqlQuery sqlQuery = SqlQuery(
       authToken: 'auth-token-test', 
