@@ -69,7 +69,7 @@ class DoData {
   }
   ///
   /// depricated method
-  /// this functional must be repleced with method insert & update
+  /// this method must be repleced with method insert & update
   Future<Result<List<Map<String, dynamic>>>> loadToDb(String sqlQueryString) async {
     SqlQuery sqlQuery = SqlQuery(
       authToken: 'auth-token-test', 
