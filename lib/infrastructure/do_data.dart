@@ -45,8 +45,9 @@ class DoData {
         error: Failure(message: '[DoData.all] error: SQL query is empty', stackTrace: StackTrace.current),
       );
     });
-  }  
-Future<Result<List<Map<String, dynamic>>>> loadToDb(String sqlQueryString) async {
+  }
+  ///
+  Future<Result<List<Map<String, dynamic>>>> loadToDb(String sqlQueryString) async {
     SqlQuery sqlQuery = SqlQuery(
       authToken: 'auth-token-test', 
       database: 'database',
@@ -78,6 +79,5 @@ Future<Result<List<Map<String, dynamic>>>> loadToDb(String sqlQueryString) async
         error: Failure(message: '[DoData.all] error: SQL query is empty', stackTrace: StackTrace.current),
       );
     });
-  }  
-
+  }
 }
