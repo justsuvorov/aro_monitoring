@@ -154,6 +154,11 @@ class _DataPageState extends State<DataBody> {
   ///
   @override
   Widget build(BuildContext context) {
+     var textStyle = const TextStyle(
+ 
+      fontFamily: 'GPN_DIN',
+      color: Colors.white,
+    );
     return SingleChildScrollView(
       child: Column(
         mainAxisAlignment: MainAxisAlignment.start,
@@ -161,7 +166,7 @@ class _DataPageState extends State<DataBody> {
         children: [
           Container(
             margin: const EdgeInsets.all(10),
-            padding: const EdgeInsets.all(0),
+            padding: const EdgeInsets.all(10),
             constraints: const BoxConstraints(
               maxHeight: 700,
             ),
@@ -177,9 +182,9 @@ class _DataPageState extends State<DataBody> {
                     return;
                   },
                   icon: const Icon(Icons.add),
-                  label: const Text("Добавить мероприятия в базу"),
+                  label: const Text("Добавить мероприятия в базу", style: TextStyle(fontFamily: 'GPN_DIN'), ),
                 ),
-                reponseScreenSizes: const [ScreenSize.xs],
+                reponseScreenSizes: const [ScreenSize.sm],
                 actions: [
                   if (_isSearch)
                     Expanded(
@@ -238,12 +243,10 @@ class _DataPageState extends State<DataBody> {
                   return DropDownContainer(data: data);
                 },
                 onChangedRow: (value, header) {
-
                   // TODO onPress to be implemented
                   return;
                 },
                 onSubmittedRow: (value, header) {
-
                   // TODO onPress to be implemented
                   return;
                 },
@@ -367,8 +370,8 @@ class _DataPageState extends State<DataBody> {
                           BorderSide(color: Colors.green[300]!, width: 1),),
                   color: Colors.green,
                 ),
-                headerTextStyle: const TextStyle(color: Colors.white),
-                rowTextStyle: const TextStyle(color: Colors.green),
+                headerTextStyle: const TextStyle(color: Colors.white, fontFamily: 'GPN_DIN'),
+                rowTextStyle: const TextStyle(color: Colors.green, fontFamily: 'GPN_DIN'),
                 selectedTextStyle: const TextStyle(color: Colors.white),
               ),
             ),
@@ -393,7 +396,7 @@ final _headers = [
     value: "name",
     show: true,
     sortable: true,
-    textAlign: TextAlign.left,
+    textAlign: TextAlign.center,
   ),
   DatatableHeader(
     text: "Скважина",
@@ -407,28 +410,28 @@ final _headers = [
     value: "pad",
     show: true,
     sortable: true,
-    textAlign: TextAlign.left,
+    textAlign: TextAlign.center,
   ),
   DatatableHeader(
     text: "Объект подготовки",
     value: "prep_object",
     show: true,
     sortable: true,
-    textAlign: TextAlign.left,
+    textAlign: TextAlign.center,
   ),
   DatatableHeader(
     text: "Месторождение",
     value: "field",
     show: true,
     sortable: true,
-    textAlign: TextAlign.left,
+    textAlign: TextAlign.center,
   ),
   DatatableHeader(
     text: "ДО",
     value: "company",
     show: true,
     sortable: true,
-    textAlign: TextAlign.left,
+    textAlign: TextAlign.center,
   ),
   DatatableHeader(
     text: "Мероприятие",
@@ -437,7 +440,7 @@ final _headers = [
     editable: true,
     sortable: true,
     
-    textAlign: TextAlign.left,
+    textAlign: TextAlign.center,
   ),
   DatatableHeader(
     text: "Комментарии к мероприятию",

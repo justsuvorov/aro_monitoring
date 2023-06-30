@@ -179,7 +179,7 @@ class _HomePageState extends State<HomeBody> {
                               database: 'database',
                               sql: dropdownValue == 0 
                                 ? 'SELECT * FROM do_data'
-                                : 'SELECT * FROM do_data WHERE company like \'${_depList[dropdownValue]}\'',
+                                : 'SELECT * FROM do_data WHERE compnay_name like \'${_depList[dropdownValue]}\'',
                               ),
                             ),
                           ),
