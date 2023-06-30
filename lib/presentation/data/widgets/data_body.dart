@@ -102,7 +102,6 @@ class _DataPageState extends State<DataBody> {
   ///
   _filterData(value) {
     setState(() => _isLoading = true);
-
     try {
       if (value == "" || value == null) {
         _sourceFiltered = _sourceOriginal;
@@ -114,7 +113,6 @@ class _DataPageState extends State<DataBody> {
                 .contains(value.toString().toLowerCase()))
             .toList();
       }
-
       _total = _sourceFiltered.length;
       var rangeTop = _total < _currentPerPage! ? _total : _currentPerPage!;
       _expanded = List.generate(rangeTop, (index) => false);
@@ -125,13 +123,14 @@ class _DataPageState extends State<DataBody> {
     setState(() => _isLoading = false);
   }
 
-  _updateDbTable(){
+  _updateDbTable() {
     List keys = ['activity', 'comment', 'date_planning', 'date_fact', 'responsible_person', 'obj_status', 'failure'];
     int k = 0;
     for (final i in _source) {
       int id = i['id'];
       for (String column in keys) {
         String str = i[column];
+        // TODO this SQL must be implemented in the sql-speacing object (DoData) 
         String sqlQuery = 'UPDATE do_data SET \'$column\' = \'$str\' WHERE id = $id';
         _doData.loadToDb(sqlQuery);
       }
