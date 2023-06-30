@@ -4,26 +4,26 @@ import 'dart:io';
 import 'package:aro_monitoring/domain/core/error/failure.dart';
 import 'package:aro_monitoring/domain/core/result/result.dart';
 import 'package:aro_monitoring/infrastructure/api_address.dart';
+import 'package:aro_monitoring/infrastructure/api_query_type/api_query_type.dart';
 import 'package:aro_monitoring/infrastructure/api_reply.dart';
-import 'package:aro_monitoring/infrastructure/sql/sql_query.dart';
 import 'package:logging/logging.dart';
 
 class ApiRequest {
   final _log = Logger('ApiRequest');
   final ApiAddress _address;
-  final SqlQuery _sqlQuery;
+  final ApiQueryType _query;
   ///
   ApiRequest({
     required ApiAddress address,
-    required SqlQuery sqlQuery,
+    required ApiQueryType sqlQuery,
   }) :
     _address = address,
-    _sqlQuery = sqlQuery;
+    _query = sqlQuery;
   ///
   /// exequtes created sql query to the remote
   /// returns reply if exists
   Future<Result<ApiReply>> fetch() async {
-    final query = _sqlQuery.buildJson();
+    final query = _query.buildJson();
     final bytes = utf8.encode(query);
     return Socket.connect(_address.host, _address.port, timeout: const Duration(seconds: 3))
       .then((socket) async {

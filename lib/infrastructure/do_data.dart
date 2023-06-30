@@ -1,8 +1,9 @@
 import 'package:aro_monitoring/domain/core/error/failure.dart';
 import 'package:aro_monitoring/domain/core/result/result.dart';
 import 'package:aro_monitoring/infrastructure/api_address.dart';
+import 'package:aro_monitoring/infrastructure/api_reply.dart';
 import 'package:aro_monitoring/infrastructure/api_request.dart';
-import 'package:aro_monitoring/infrastructure/sql/sql_query.dart';
+import 'package:aro_monitoring/infrastructure/api_query_type/sql_query.dart';
 import 'package:logging/logging.dart';
 
 class DoData {
@@ -45,12 +46,35 @@ class DoData {
         error: Failure(message: '[DoData.all] error: SQL query is empty', stackTrace: StackTrace.current),
       );
     });
-  }  
-Future<Result<List<Map<String, dynamic>>>> load_to_db(String sql_query_string) async {
+  }
+  ///
+  /// updates single field [value] in the record with specified [id]
+  Future<Result<ApiReply>> update(String id, String field, String value) async {
+    // TODO insert new rec into the database to be implemented
+    String sql = 'UPDATE `do_data` SET \'$field\' = \'$value\' WHERE id = $id';
+    final apiRequest = ApiRequest(
+      address: _address, 
+      sqlQuery: SqlQuery(
+        authToken: _sqlQuery.authToken, 
+        database: _sqlQuery.database, 
+        sql: sql,
+      ),
+    );
+    return apiRequest.fetch();
+  }
+  ///
+  Future<Result<List<Map<String, dynamic>>>> insert(String sql) async {
+    // TODO update rec in the database to be implemented
+    return Future.delayed(const Duration(milliseconds: 100));
+  }
+  ///
+  /// depricated method
+  /// this method must be repleced with method insert & update
+  Future<Result<List<Map<String, dynamic>>>> loadToDb(String sqlQueryString) async {
     SqlQuery sqlQuery = SqlQuery(
       authToken: 'auth-token-test', 
       database: 'database',
-      sql: sql_query_string
+      sql: sqlQueryString,
     );
     if (sqlQuery.valid()) {
       final apiRequest = ApiRequest(
@@ -78,6 +102,5 @@ Future<Result<List<Map<String, dynamic>>>> load_to_db(String sql_query_string) a
         error: Failure(message: '[DoData.all] error: SQL query is empty', stackTrace: StackTrace.current),
       );
     });
-  }  
-
+  }
 }

@@ -3,7 +3,7 @@ import 'dart:io';
 
 import 'package:aro_monitoring/infrastructure/api_address.dart';
 import 'package:aro_monitoring/infrastructure/api_request.dart';
-import 'package:aro_monitoring/infrastructure/sql/sql_query.dart';
+import 'package:aro_monitoring/infrastructure/api_query_type/sql_query.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:logging/logging.dart';
 

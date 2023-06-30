@@ -1,6 +1,10 @@
 import 'dart:math';
 
+import 'package:aro_monitoring/infrastructure/api_address.dart';
+import 'package:aro_monitoring/infrastructure/api_request.dart';
 import 'package:aro_monitoring/infrastructure/do_data.dart';
+import 'package:aro_monitoring/infrastructure/api_query_type/python_query.dart';
+import 'package:aro_monitoring/infrastructure/api_query_type/sql_query.dart';
 import 'package:aro_monitoring/presentation/core/widgets/drop_down_container.dart';
 import 'package:flutter/material.dart';
 import 'package:logging/logging.dart';
@@ -102,7 +106,6 @@ class _DataPageState extends State<DataBody> {
   ///
   _filterData(value) {
     setState(() => _isLoading = true);
-
     try {
       if (value == "" || value == null) {
         _sourceFiltered = _sourceOriginal;
@@ -114,7 +117,6 @@ class _DataPageState extends State<DataBody> {
                 .contains(value.toString().toLowerCase()))
             .toList();
       }
-
       _total = _sourceFiltered.length;
       var rangeTop = _total < _currentPerPage! ? _total : _currentPerPage!;
       _expanded = List.generate(rangeTop, (index) => false);
@@ -125,18 +127,25 @@ class _DataPageState extends State<DataBody> {
     setState(() => _isLoading = false);
   }
 
-  _update_db_table(){
-    List keys = ['activity', 'comment', 'date_planning', 'date_fact', 'responsible_person', 'obj_status', 'failure'];
+  _updateDbTable() {
+    // TODO this field names must be implemented in the sql-speacing object (DoData) 
+    List fieldNames = ['activity', 'comment', 'date_planning', 'date_fact', 'responsible_person', 'obj_status', 'failure'];
     int k = 0;
-    for (final i in _source){
-
-      int id = i['id'];
-      for (String column in keys){
-        String str = i[column];
-        String sqlQuery = 'UPDATE do_data SET \'$column\' = \'$str\' WHERE id = $id';
-        _doData.load_to_db(sqlQuery);}
-
-      ;};
+    for (final i in _source) {
+      String id = i['id'];
+      for (String fieldName in fieldNames) {
+        String value = i[fieldName];
+        _doData.update(
+          id,
+          fieldName,
+          value,
+        );
+        // TODO following lines to be deleted because this functional wath moved in to the update method of the DoData class
+        // TODO this SQL must be implemented in the sql-speacking object (DoData) 
+        // String sqlQuery = 'UPDATE do_data SET \'$column\' = \'$str\' WHERE id = $id';
+        // _doData.loadToDb(sqlQuery);
+      }
+    }
   }
 
   @override
@@ -177,8 +186,8 @@ class _DataPageState extends State<DataBody> {
               child: ResponsiveDatatable(
                 title: TextButton.icon(
                   onPressed: () {
-                    _update_db_table();
-                    print('Load to db');
+                    _updateDbTable();
+                    _log.fine('Load to db');
                     return;
                   },
                   icon: const Icon(Icons.add),
@@ -230,6 +239,25 @@ class _DataPageState extends State<DataBody> {
                     )
                   else 
                     const Icon(Icons.replay),
+                  // TODO To be deleted, Testing python-script API service
+                  IconButton(
+                    onPressed: () {
+                      final apiRequest = ApiRequest(
+                        address: const ApiAddress(host: '127.0.0.1', port: 8899), 
+                        sqlQuery: PythonQuery(
+                          authToken: 'authToken', 
+                          script: 'py-test', 
+                          params: '{"a": 5, "b":10}',
+                        ),
+                      );
+                      apiRequest
+                        .fetch()
+                        .then((reply) {
+                          _log.fine('python-script test | reply: $reply');
+                        });
+                    }, 
+                    icon: const Icon(Icons.lightbulb_outline_rounded),
+                  ),
                 ],
                 headers: _headers,
                 source: _source,
