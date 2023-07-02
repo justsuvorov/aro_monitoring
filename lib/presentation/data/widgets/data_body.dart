@@ -6,6 +6,7 @@ import 'package:aro_monitoring/infrastructure/api_request.dart';
 import 'package:aro_monitoring/infrastructure/do_data.dart';
 import 'package:aro_monitoring/infrastructure/api_query_type/python_query.dart';
 import 'package:aro_monitoring/presentation/core/widgets/drop_down_container.dart';
+import 'package:aro_monitoring/presentation/data/widgets/dialog.dart';
 import 'package:flutter/material.dart';
 import 'package:logging/logging.dart';
 import 'package:responsive_table/responsive_table.dart';
@@ -30,6 +31,7 @@ class DataBody extends StatefulWidget {
 ///
 class _DataPageState extends State<DataBody> {
   final _log = Logger('_DataPageState');
+  final _formKey = GlobalKey<FormState>();
   final DoData _doData;
   // late List<DatatableHeader> _headers;
 
@@ -418,6 +420,13 @@ class _DataPageState extends State<DataBody> {
   }
   ///
   Future<Result<bool>> _fillFormDialog(BuildContext context) {
+            showDialog(
+                context: context,
+                builder: (BuildContext context) {
+                  return NewEventDialog(
+                    formKey: _formKey,
+                  );
+                },);
     return Future.delayed(
       const Duration(milliseconds: 1500),
       () {
