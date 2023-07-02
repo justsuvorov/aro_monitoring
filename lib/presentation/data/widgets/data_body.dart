@@ -7,6 +7,7 @@ import 'package:aro_monitoring/infrastructure/do_data.dart';
 import 'package:aro_monitoring/infrastructure/api_query_type/python_query.dart';
 import 'package:aro_monitoring/presentation/core/widgets/drop_down_container.dart';
 import 'package:aro_monitoring/presentation/data/widgets/dialog.dart';
+import 'package:aro_monitoring/presentation/data/widgets/table_headers.dart';
 import 'package:flutter/material.dart';
 import 'package:logging/logging.dart';
 import 'package:responsive_table/responsive_table.dart';
@@ -269,7 +270,7 @@ class _DataPageState extends State<DataBody> {
                     icon: const Icon(Icons.lightbulb_outline_rounded),
                   ),
                 ],
-                headers: _headers,
+                headers: tableHeaders,
                 source: _source,
                 selecteds: _selecteds,
                 showSelect: _showSelect,
@@ -435,121 +436,3 @@ class _DataPageState extends State<DataBody> {
     );
   }
 }
-
-
-final _headers = [
-  DatatableHeader(
-    text: "№",
-    value: "id",
-    show: true,
-    sortable: true,
-    textAlign: TextAlign.center,
-  ),
-  DatatableHeader(
-    text: "Тип объекта",
-    value: "name",
-    show: true,
-    sortable: true,
-    textAlign: TextAlign.center,
-  ),
-  DatatableHeader(
-    text: "Скважина",
-    value: "well",
-    show: true,
-    sortable: true,
-    textAlign: TextAlign.center,
-  ),
-  DatatableHeader(
-    text: "Куст",
-    value: "pad",
-    show: true,
-    sortable: true,
-    textAlign: TextAlign.center,
-  ),
-  DatatableHeader(
-    text: "Объект подготовки",
-    value: "prep_object",
-    show: true,
-    sortable: true,
-    textAlign: TextAlign.center,
-  ),
-  DatatableHeader(
-    text: "Месторождение",
-    value: "field",
-    show: true,
-    sortable: true,
-    textAlign: TextAlign.center,
-  ),
-  DatatableHeader(
-    text: "ДО",
-    value: "company",
-    show: true,
-    sortable: true,
-    textAlign: TextAlign.center,
-  ),
-  DatatableHeader(
-    text: "Мероприятие",
-    value: "activity",
-    show: true,
-    editable: true,
-    sortable: true,
-    
-    textAlign: TextAlign.center,
-  ),
-  DatatableHeader(
-    text: "Комментарии к мероприятию",
-    value: "comment",
-    show: true,
-    sortable: false,
-    editable: true,
-    textAlign: TextAlign.center,
-  ),
-  DatatableHeader(
-    text: "Дата выполнения",
-    value: "date_fact",
-    show: true,
-    editable: true,
-    sortable: false,
-    textAlign: TextAlign.center,
-  ),
-  DatatableHeader(
-    text: "Планируемая дата",
-    value: "date_planning",
-    show: true,
-    editable: true,
-    sortable: false,
-    textAlign: TextAlign.center,
-  ),
-  DatatableHeader(
-    text: "Дата направления мероприятия",
-    value: "date_creation",
-    show: true,
-    editable: true,
-    sortable: false,
-    textAlign: TextAlign.center,
-  ),
-  DatatableHeader(
-    text: "Ответственный",
-    value: "responsible_person",
-    show: true,
-    editable: true,
-    sortable: false,
-    textAlign: TextAlign.center,
-  ),
-  DatatableHeader(
-    text: "Отказ. Да/Нет",
-    value: "failure",
-    show: true,
-    editable: true,
-    sortable: false,
-    textAlign: TextAlign.center,
-  ),
-  DatatableHeader(
-    text: "Статус объекта. В работе/остановлен",
-    value: "obj_status",
-    show: true,
-    editable: true,
-    sortable: false,
-    textAlign: TextAlign.center,
-  ),
-];

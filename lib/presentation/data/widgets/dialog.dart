@@ -1,3 +1,4 @@
+import 'package:aro_monitoring/presentation/data/widgets/table_headers.dart';
 import 'package:flutter/material.dart';
 
 class NewEventDialog extends StatefulWidget {
@@ -25,6 +26,7 @@ class _NewEventDialogState extends State<NewEventDialog> {
   ///
   @override
   Widget build(BuildContext context) {
+    const padding = 8.0;
     return AlertDialog(
       content: Stack(
         clipBehavior: Clip.none, children: <Widget>[
@@ -47,15 +49,87 @@ class _NewEventDialogState extends State<NewEventDialog> {
               mainAxisSize: MainAxisSize.min,
               children: [
                 Padding(
-                  padding: const EdgeInsets.all(8.0),
-                  child: TextFormField(),
+                  padding: const EdgeInsets.symmetric(horizontal: padding),
+                  child: TextFormField(
+                    decoration: InputDecoration(
+                      // icon: const Icon(Icons.person),
+                      hintText: 'The number',
+                      labelText: tableHeaders[0].text,
+                    ),
+                  ),
                 ),
                 Padding(
-                  padding: const EdgeInsets.all(8.0),
-                  child: TextFormField(),
+                  padding: const EdgeInsets.symmetric(horizontal: padding),
+                  child: TextFormField(
+                    decoration: InputDecoration(
+                      // icon: const Icon(Icons.person),
+                      hintText: 'The number',
+                      labelText: tableHeaders[1].text,
+                    ),
+                  ),
                 ),
                 Padding(
-                  padding: const EdgeInsets.all(8.0),
+                  padding: const EdgeInsets.symmetric(horizontal: padding),
+                  child: TextFormField(
+                    decoration: InputDecoration(
+                      // icon: const Icon(Icons.person),
+                      hintText: 'The number',
+                      labelText: tableHeaders[2].text,
+                    ),
+                  ),
+                ),
+                Padding(
+                  padding: const EdgeInsets.symmetric(horizontal: padding),
+                  child: TextFormField(
+                    decoration: InputDecoration(
+                      // icon: const Icon(Icons.person),
+                      hintText: 'The number',
+                      labelText: tableHeaders[3].text,
+                    ),
+                  ),
+                ),
+                Padding(
+                  padding: const EdgeInsets.symmetric(horizontal: padding),
+                  child: TextFormField(
+                    decoration: InputDecoration(
+                      // icon: const Icon(Icons.person),
+                      hintText: 'The number',
+                      labelText: tableHeaders[4].text,
+                    ),
+                  ),
+                ),
+                Padding(
+                  padding: const EdgeInsets.symmetric(horizontal: padding),
+                  child: TextFormField(
+                    decoration: InputDecoration(
+                      // icon: const Icon(Icons.person),
+                      hintText: 'The number',
+                      labelText: tableHeaders[5].text,
+                    ),
+                  ),
+                ),
+                Padding(
+                  padding: const EdgeInsets.symmetric(horizontal: padding),
+                  child: TextFormField(
+                    decoration: InputDecoration(
+                      // icon: const Icon(Icons.person),
+                      hintText: 'The number',
+                      labelText: tableHeaders[6].text,
+                    ),
+                  ),
+                ),
+                Padding(
+                  padding: const EdgeInsets.symmetric(horizontal: padding),
+                  child: TextFormField(
+                    decoration: InputDecoration(
+                      // icon: const Icon(Icons.person),
+                      hintText: 'The number',
+                      labelText: tableHeaders[7].text,
+                    ),
+                  ),
+                ),
+                Padding(
+                  padding: const EdgeInsets.symmetric(horizontal: padding, vertical: padding),
                   child: TextButton(
                     child: const Text("Submitß"),
                     onPressed: () {
@@ -65,6 +139,7 @@ class _NewEventDialogState extends State<NewEventDialog> {
                           formKeyCurrentState.save();
                         }
                       }
+                      Navigator.of(context).pop();
                     },
                   ),
                 ),
