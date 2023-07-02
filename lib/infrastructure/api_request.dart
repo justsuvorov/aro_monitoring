@@ -36,6 +36,7 @@ class ApiRequest {
               utf8.decode(message),
             // ),              
           );
+          await _closeSocket(socket);
           return Result(data: reply);
         } catch (error) {
           _log.warning('.fetch | socket error: $error');
