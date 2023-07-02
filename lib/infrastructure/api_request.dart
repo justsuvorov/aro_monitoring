@@ -78,15 +78,15 @@ class ApiRequest {
           message.addAll(event);
         });
       await subscription.asFuture();
-      // _log.fine('.fetch | socket message: $message');
+      // _log.fine('._read | socket message: $message');
       _closeSocket(socket);
       return Result(data: message);
     } catch (error) {
-      _log.warning('.fetch | socket error: $error');
+      _log.warning('._read | socket error: $error');
       await _closeSocket(socket);
       return Result(
         error: Failure.connection(
-          message: '.fetch | socket error: $error', 
+          message: '._read | socket error: $error', 
           stackTrace: StackTrace.current,
         ),
       );
@@ -101,7 +101,7 @@ class ApiRequest {
       _log.warning('._send | socket error: $error');
       return Result(
         error: Failure.connection(
-          message: '.fetch | socket error: $error', 
+          message: '._send | socket error: $error', 
           stackTrace: StackTrace.current,
         ),
       );
