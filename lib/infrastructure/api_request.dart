@@ -29,12 +29,21 @@ class ApiRequest {
       .then((socket) async {
         socket.add(bytes);
         try {
-          final message = await socket.first;
-          _log.fine('.fetch | socket message: $message');
+          List<int> message = [];
+          final subscription = socket
+            .timeout(
+              const Duration(milliseconds: 3000),
+              onTimeout: (sink) {
+                sink.close();
+              },
+            )
+            .listen((event) {
+              message.addAll(event);
+            });
+          await subscription.asFuture();
+          // _log.fine('.fetch | socket message: $message');
           final reply = ApiReply.fromJson(
-            // json.decode(
-              utf8.decode(message),
-            // ),              
+            utf8.decode(message),
           );
           await _closeSocket(socket);
           return Result(data: reply);
