@@ -129,6 +129,69 @@ class _NewEventDialogState extends State<NewEventDialog> {
                   ),
                 ),
                 Padding(
+                  padding: const EdgeInsets.symmetric(horizontal: padding),
+                  child: TextFormField(
+                    decoration: InputDecoration(
+                      // icon: const Icon(Icons.person),
+                      hintText: 'The number',
+                      labelText: tableHeaders[8].text,
+                    ),
+                  ),
+                ),                Padding(
+                  padding: const EdgeInsets.symmetric(horizontal: padding),
+                  child: TextFormField(
+                    decoration: InputDecoration(
+                      // icon: const Icon(Icons.person),
+                      hintText: 'The number',
+                      labelText: tableHeaders[8].text,
+                    ),
+                  ),
+                ),                Padding(
+                  padding: const EdgeInsets.symmetric(horizontal: padding),
+                  child: TextFormField(
+                    decoration: InputDecoration(
+                      // icon: const Icon(Icons.person),
+                      hintText: 'The number',
+                      labelText: tableHeaders[10].text,
+                    ),
+                  ),
+                ),                Padding(
+                  padding: const EdgeInsets.symmetric(horizontal: padding),
+                  child: TextFormField(
+                    decoration: InputDecoration(
+                      // icon: const Icon(Icons.person),
+                      hintText: 'The number',
+                      labelText: tableHeaders[11].text,
+                    ),
+                  ),
+                ),                Padding(
+                  padding: const EdgeInsets.symmetric(horizontal: padding),
+                  child: TextFormField(
+                    decoration: InputDecoration(
+                      // icon: const Icon(Icons.person),
+                      hintText: 'The number',
+                      labelText: tableHeaders[12].text,
+                    ),
+                  ),
+                ),                Padding(
+                  padding: const EdgeInsets.symmetric(horizontal: padding),
+                  child: TextFormField(
+                    decoration: InputDecoration(
+                      // icon: const Icon(Icons.person),
+                      hintText: 'The number',
+                      labelText: tableHeaders[13].text,
+                    ),
+                  ),
+                ),                Padding(
+                  padding: const EdgeInsets.symmetric(horizontal: padding),
+                  child: TextFormField(
+                    decoration: InputDecoration(
+                      // icon: const Icon(Icons.person),
+                      hintText: 'The number',
+                      labelText: tableHeaders[14].text,
+                    ),
+                  ),
+                ),                Padding(
                   padding: const EdgeInsets.symmetric(horizontal: padding, vertical: padding),
                   child: TextButton(
                     child: const Text("Submitß"),
