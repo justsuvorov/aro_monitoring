@@ -29,10 +29,10 @@ class DoData {
         _log.fine('.all | result: $result');
         return result.fold(
           onData: (apiReply) {
-            final data = apiReply.data.map((row) {
-              _log.fine('.all | row: $row');
-              return row['name'].toString();
-            });
+            // final data = apiReply.data.map((row) {
+            //   _log.fine('.all | row: $row');
+            //   return row['name'].toString();
+            // });
             return Result(data: apiReply.data);
           }, 
           onError: (error) {
@@ -85,10 +85,10 @@ class DoData {
         _log.fine('.all | result: $result');
         return result.fold(
           onData: (apiReply) {
-            final data = apiReply.data.map((row) {
-              _log.fine('.all | row: $row');
-              return row['name'].toString();
-            });
+            // final data = apiReply.data.map((row) {
+            //   _log.fine('.all | row: $row');
+            //   return row['name'].toString();
+            // });
             return Result(data: apiReply.data);
           }, 
           onError: (error) {

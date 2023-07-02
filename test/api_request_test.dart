@@ -11,6 +11,7 @@ import 'package:logging/logging.dart';
 void main() {
   Logger.root.level = Level.ALL;
   Logger.root.onRecord.listen((record) {
+    // ignore: avoid_print
     print('${record.level.name}: ${record.time} | ${record.loggerName}${record.message}');
   });
   final log = Logger('ApiRequestTest');
@@ -46,17 +47,17 @@ void main() {
       final reply = await apiRequest.fetch();
       log.fine(' | reply: $reply');
     return;
-    for (final sql in testSqls) {
-      final apiRequest = ApiRequest(
-        address: apiAddress,
-        sqlQuery: SqlQuery(
-          authToken: 'auth-token-test',
-          database: 'database',
-          sql: sql,
-        ),
-      );
-      apiRequest.fetch();
-    }
+    // for (final sql in testSqls) {
+    //   final apiRequest = ApiRequest(
+    //     address: apiAddress,
+    //     sqlQuery: SqlQuery(
+    //       authToken: 'auth-token-test',
+    //       database: 'database',
+    //       sql: sql,
+    //     ),
+    //   );
+    //   apiRequest.fetch();
+    // }
     // remains subscription for '/Local/Local.System.Connection' only
     // expect(dsClient.subscriptionsCount, 1);
   });

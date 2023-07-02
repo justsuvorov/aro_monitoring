@@ -4,7 +4,6 @@ import 'package:aro_monitoring/presentation/core/widgets/drop_down_container.dar
 import 'package:flutter/material.dart';
 import 'package:logging/logging.dart';
 import 'package:responsive_table/responsive_table.dart';
-import 'package:logging/logging.dart';
 
 ///
 class MonitoringBody extends StatefulWidget {
@@ -422,7 +421,7 @@ final _headers = [
     value: "compnay_name",
     show: true,
     sortable: true,
-    textAlign: TextAlign.center
+    textAlign: TextAlign.center,
   ),
   DatatableHeader(
     text: "Дата внесения",

@@ -9,14 +9,14 @@ import 'package:flutter/material.dart';
 ///
 class MonitoringPage extends StatelessWidget {
   final String _title;
-  final DoData doData;
+  final DoData _doData;
   const MonitoringPage({
     Key? key,
     required String title,
     required DoData doData,
   }) : 
     _title = title,
-    doData = doData, 
+    _doData = doData, 
     super(key: key);
   ///
   @override
@@ -58,7 +58,7 @@ class MonitoringPage extends StatelessWidget {
           ],
         ),
       ),
-      body: MonitoringBody(doData: doData,),
+      body: MonitoringBody(doData: _doData,),
     );
   }
 }

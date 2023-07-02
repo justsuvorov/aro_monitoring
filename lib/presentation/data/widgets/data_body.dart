@@ -4,7 +4,6 @@ import 'package:aro_monitoring/infrastructure/api_address.dart';
 import 'package:aro_monitoring/infrastructure/api_request.dart';
 import 'package:aro_monitoring/infrastructure/do_data.dart';
 import 'package:aro_monitoring/infrastructure/api_query_type/python_query.dart';
-import 'package:aro_monitoring/infrastructure/api_query_type/sql_query.dart';
 import 'package:aro_monitoring/presentation/core/widgets/drop_down_container.dart';
 import 'package:flutter/material.dart';
 import 'package:logging/logging.dart';
@@ -130,7 +129,6 @@ class _DataPageState extends State<DataBody> {
   _updateDbTable() {
     // TODO this field names must be implemented in the sql-speacing object (DoData) 
     List fieldNames = ['activity', 'comment', 'date_planning', 'date_fact', 'responsible_person', 'obj_status', 'failure'];
-    int k = 0;
     for (final i in _source) {
       String id = i['id'];
       for (String fieldName in fieldNames) {
@@ -163,11 +161,10 @@ class _DataPageState extends State<DataBody> {
   ///
   @override
   Widget build(BuildContext context) {
-     var textStyle = const TextStyle(
- 
-      fontFamily: 'GPN_DIN',
-      color: Colors.white,
-    );
+    //  const textStyle = TextStyle(
+    //   fontFamily: 'GPN_DIN',
+    //   color: Colors.white,
+    // );
     return SingleChildScrollView(
       child: Column(
         mainAxisAlignment: MainAxisAlignment.start,
