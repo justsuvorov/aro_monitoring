@@ -1,5 +1,6 @@
 import 'dart:math';
 
+import 'package:aro_monitoring/domain/core/result/result.dart';
 import 'package:aro_monitoring/infrastructure/api_address.dart';
 import 'package:aro_monitoring/infrastructure/api_request.dart';
 import 'package:aro_monitoring/infrastructure/do_data.dart';
@@ -183,7 +184,17 @@ class _DataPageState extends State<DataBody> {
               child: ResponsiveDatatable(
                 title: TextButton.icon(
                   onPressed: () {
-                    _updateDbTable();
+                    _fillFormDialog(context)
+                      .then((result) {
+                        result.fold(
+                          onData:(_) {
+                            _updateDbTable();
+                          },
+                          onError: (error) {
+                            // TODO Show error dialog or somthing
+                          },
+                        );
+                      }); 
                     _log.fine('Load to db');
                     return;
                   },
@@ -403,6 +414,15 @@ class _DataPageState extends State<DataBody> {
           ),
         ],
       ),
+    );
+  }
+  ///
+  Future<Result<bool>> _fillFormDialog(BuildContext context) {
+    return Future.delayed(
+      const Duration(milliseconds: 1500),
+      () {
+        return const Result(data: true);
+      },
     );
   }
 }
