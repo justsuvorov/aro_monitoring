@@ -20,7 +20,7 @@ class ApiRequest {
     _address = address,
     _query = sqlQuery;
   ///
-  /// exequtes created sql query to the remote
+  /// sends created request to the remote
   /// returns reply if exists
   Future<Result<ApiReply>> fetch() async {
     final query = _query.buildJson();
