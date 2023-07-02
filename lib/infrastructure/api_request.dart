@@ -93,10 +93,10 @@ class ApiRequest {
     }
   }
   ///
-  Future<Result<void>> _send(Socket socket, List<int> bytes) async {
+  Future<Result<bool>> _send(Socket socket, List<int> bytes) async {
     try {
       socket.add(bytes);
-      return Future.value(Result(data: null));
+      return Future.value(const Result(data: true));
     } catch (error) {
       _log.warning('._send | socket error: $error');
       return Result(
