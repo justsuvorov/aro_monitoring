@@ -99,7 +99,6 @@ class ApiRequest {
       return Future.value(Result(data: null));
     } catch (error) {
       _log.warning('._send | socket error: $error');
-      await _closeSocket(socket);
       return Result(
         error: Failure.connection(
           message: '.fetch | socket error: $error', 
