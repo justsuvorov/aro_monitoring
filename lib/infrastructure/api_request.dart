@@ -27,36 +27,32 @@ class ApiRequest {
     final bytes = utf8.encode(query);
     return Socket.connect(_address.host, _address.port, timeout: const Duration(seconds: 3))
       .then((socket) async {
-        socket.add(bytes);
-        try {
-          List<int> message = [];
-          final subscription = socket
-            .timeout(
-              const Duration(milliseconds: 3000),
-              onTimeout: (sink) {
-                sink.close();
+        return _send(socket, bytes)
+          .then((result) {
+            return result.fold(
+              onData: (_) {
+                return _read(socket).then((result) {
+                  return result.fold(
+                    onData: (bytes) {
+                      return Result<ApiReply>(
+                        data: ApiReply.fromJson(
+                          utf8.decode(bytes),
+                        ),
+                      );
+                    }, 
+                    onError: (err) {
+                      return Result<ApiReply>(error: err);
+                    },
+                  );
+                });
+              }, 
+              onError: (err) {
+                return Future.value(
+                  Result<ApiReply>(error: err),
+                );
               },
-            )
-            .listen((event) {
-              message.addAll(event);
-            });
-          await subscription.asFuture();
-          // _log.fine('.fetch | socket message: $message');
-          final reply = ApiReply.fromJson(
-            utf8.decode(message),
-          );
-          await _closeSocket(socket);
-          return Result(data: reply);
-        } catch (error) {
-          _log.warning('.fetch | socket error: $error');
-          await _closeSocket(socket);
-          return Result<ApiReply>(
-            error: Failure.connection(
-              message: '.fetch | socket error: $error', 
-              stackTrace: StackTrace.current,
-            ),
-          );
-        }
+            );
+          });
       })
       .catchError((error) {
           return Result<ApiReply>(
@@ -66,6 +62,51 @@ class ApiRequest {
             ),
           );
       });
+  }
+  ///
+  Future<Result<List<int>>> _read(Socket socket) async {
+    try {
+      List<int> message = [];
+      final subscription = socket
+        .timeout(
+          const Duration(milliseconds: 3000),
+          onTimeout: (sink) {
+            sink.close();
+          },
+        )
+        .listen((event) {
+          message.addAll(event);
+        });
+      await subscription.asFuture();
+      // _log.fine('.fetch | socket message: $message');
+      _closeSocket(socket);
+      return Result(data: message);
+    } catch (error) {
+      _log.warning('.fetch | socket error: $error');
+      await _closeSocket(socket);
+      return Result(
+        error: Failure.connection(
+          message: '.fetch | socket error: $error', 
+          stackTrace: StackTrace.current,
+        ),
+      );
+    }
+  }
+  ///
+  Future<Result<void>> _send(Socket socket, List<int> bytes) async {
+    try {
+      socket.add(bytes);
+      return Future.value(Result(data: null));
+    } catch (error) {
+      _log.warning('._send | socket error: $error');
+      await _closeSocket(socket);
+      return Result(
+        error: Failure.connection(
+          message: '.fetch | socket error: $error', 
+          stackTrace: StackTrace.current,
+        ),
+      );
+    }
   }
   ///
   Future<void> _closeSocket(Socket? socket) async {
