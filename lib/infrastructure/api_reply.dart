@@ -38,6 +38,22 @@ class ApiReply {
     }).toList();
     _errors = (jsonMap['errors'] as List<dynamic>).map((e) => '$e').toList();
   }
+
+  ApiReply.fromFastApiJson(String jsonString) {
+    // _log.fine('.fromJson | jsonString: $jsonString');
+    final jsonMap = json.decode(jsonString);
+    _log.fine('.fromJson | jsonMap: $jsonMap');
+    _authToken = 'fast_a[i]';
+    _id = 'None';
+    _sql = jsonMap['sql'] ?? {};
+    _data = (jsonMap['data'] as List<dynamic>).map((e) {
+      return (e as Map<dynamic, dynamic>).map((key, value) => MapEntry(key.toString(), value));
+      // final key = (e as MapEntry).key;
+      // final value = (e as MapEntry).value;
+      // return MapEntry<String, dynamic>(key.toString(), value);
+    }).toList();
+    _errors = (jsonMap['errors'] as List<dynamic>).map((e) => '$e').toList();
+  }
   ///
   String get authToken => _authToken;
   ///

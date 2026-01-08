@@ -35,7 +35,7 @@ class MonitoringPage extends StatelessWidget {
               context,
               MaterialPageRoute(
                 builder: (context) => HomePage(
-                  title: 'Мониторинг АРО',
+                  title: 'OutboxML',
                   depObjects: DepObjects(
                     address: ApiAddress.localhost(),
                     sqlQuery: SqlQuery(

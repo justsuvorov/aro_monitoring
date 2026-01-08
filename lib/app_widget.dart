@@ -11,14 +11,14 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-      title: 'Мониторинг АРО',
+      title: 'OutboxML',
       debugShowCheckedModeBanner: false,
       theme: ThemeData(
         primarySwatch: Colors.blue,
         visualDensity: VisualDensity.adaptivePlatformDensity,
       ),
       home: HomePage(
-        title: 'Мониторинг АРО',
+        title: 'OutboxML',
         depObjects: DepObjects(
           address: ApiAddress.localhost(),
           sqlQuery: SqlQuery(
