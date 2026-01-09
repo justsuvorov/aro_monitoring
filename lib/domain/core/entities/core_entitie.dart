@@ -54,6 +54,29 @@ class AutoMLConfig {
       'trigger': trigger,
     };
   }
+  AutoMLConfig copyWith({
+    String? project,
+    String? groupName,
+    FeatureSelectionConfig? featureSelection,
+    HPTuneConfig? hpTune,
+    ModelInferenceConfig? inferenceCriteria,
+    String? mlflowExperiment,
+    String? grafanaTableName,
+    String? dashboardName,
+    Map<String, String>? trigger,
+  }) {
+    return AutoMLConfig(
+      project: project ?? this.project,
+      groupName: groupName ?? this.groupName,
+      featureSelection: featureSelection ?? this.featureSelection,
+      hpTune: hpTune ?? this.hpTune,
+      inferenceCriteria: inferenceCriteria ?? this.inferenceCriteria,
+      mlflowExperiment: mlflowExperiment ?? this.mlflowExperiment,
+      grafanaTableName: grafanaTableName ?? this.grafanaTableName,
+      dashboardName: dashboardName ?? this.dashboardName,
+      trigger: trigger ?? this.trigger,
+    );
+  }
 }
 
 class FeatureSelectionConfig {
@@ -132,6 +155,43 @@ class FeatureSelectionConfig {
       'use_temp_data': useTempData,
     };
   }
+
+  FeatureSelectionConfig copyWith({
+    int? topFeaturesToSelect,
+    int? countCategory,
+    double? cutoff1Category,
+    double? cutoffNan,
+    double? maxCorrValue,
+    Map<String, dynamic>? metricEval,
+    double? cvDiffValue,
+    String? encodingCat,
+    String? encodingNum,
+    String? defaultCat,
+    String? defaultNum,
+    double? depth,
+    List<String>? featuresToIgnore,
+    Map<String, dynamic>? params,
+    bool? useTempData,
+  }) {
+    return FeatureSelectionConfig(
+      topFeaturesToSelect: topFeaturesToSelect ?? this.topFeaturesToSelect,
+      countCategory: countCategory ?? this.countCategory,
+      cutoff1Category: cutoff1Category ?? this.cutoff1Category,
+      cutoffNan: cutoffNan ?? this.cutoffNan,
+      maxCorrValue: maxCorrValue ?? this.maxCorrValue,
+      metricEval: metricEval ?? this.metricEval,
+      cvDiffValue: cvDiffValue ?? this.cvDiffValue,
+      encodingCat: encodingCat ?? this.encodingCat,
+      encodingNum: encodingNum ?? this.encodingNum,
+      defaultCat: defaultCat ?? this.defaultCat,
+      defaultNum: defaultNum ?? this.defaultNum,
+      depth: depth ?? this.depth,
+      featuresToIgnore: featuresToIgnore ?? this.featuresToIgnore,
+      params: params ?? this.params,
+      useTempData: useTempData ?? this.useTempData,
+    );
+  }
+
 }
 
 class HPTuneConfig {
@@ -165,6 +225,20 @@ class HPTuneConfig {
       'parameters': parameters,
       'metric_score': metricScore,
     };
+  }
+
+   HPTuneConfig copyWith({
+    String? sampling,
+    int? cvFoldsNum,
+    Map<String, dynamic>? parameters,
+    Map<String, String>? metricScore,
+  }) {
+    return HPTuneConfig(
+      sampling: sampling ?? this.sampling,
+      cvFoldsNum: cvFoldsNum ?? this.cvFoldsNum,
+      parameters: parameters ?? this.parameters,
+      metricScore: metricScore ?? this.metricScore,
+    );
   }
 }
 
@@ -206,4 +280,20 @@ class ModelInferenceConfig {
       'prod_path': prodPath,
     };
   }
+
+ ModelInferenceConfig copyWith({
+    String? prodModelsFolder,
+    Map<String, double>? metricGrowthValue,
+    int? calculateThreshold,
+    List<double>? threshold,
+    String? prodPath,
+  }) {
+    return ModelInferenceConfig(
+      prodModelsFolder: prodModelsFolder ?? this.prodModelsFolder,
+      metricGrowthValue: metricGrowthValue ?? this.metricGrowthValue,
+      calculateThreshold: calculateThreshold ?? this.calculateThreshold,
+      threshold: threshold ?? this.threshold,
+      prodPath: prodPath ?? this.prodPath,
+    );
+  } 
 }

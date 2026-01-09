@@ -8,6 +8,7 @@ import 'package:aro_monitoring/infrastructure/do_data.dart';
 import 'package:aro_monitoring/infrastructure/api_query_type/python_query.dart';
 import 'package:aro_monitoring/presentation/core/widgets/drop_down_container.dart';
 import 'package:aro_monitoring/presentation/data/widgets/dialog.dart';
+import 'package:aro_monitoring/presentation/data/widgets/config_editors.dart';
 import 'package:aro_monitoring/presentation/data/widgets/table_headers.dart';
 import 'package:flutter/material.dart';
 import 'package:logging/logging.dart';
@@ -160,10 +161,19 @@ Widget _buildCompactConfigForm(AutoMLConfig config) {
                 child: const Text('Показать JSON'),
               ),
             ),
-          ],
-        ),
-      ],
-    ),
+             Expanded(
+              child: ElevatedButton(
+                onPressed: _openEditor,
+                style: ElevatedButton.styleFrom(
+                  backgroundColor: Colors.blue,
+                ),
+                child: const Text('Редактировать'),
+              ),
+                ),
+              ]
+            ),
+      ]
+    )
   );
 }
 
@@ -268,4 +278,24 @@ void _showJsonPreview(AutoMLConfig config) {
     ),
   );
 }
+
+void _openEditor() async {
+  final updatedConfig = await Navigator.push<AutoMLConfig?>(
+    context,
+    MaterialPageRoute(
+      builder: (context) => AutoMLConfigEditor(
+        initialConfig: _config!,
+      ),
+    ),
+  );
+  
+  // 2. Проверяем, вернулись ли новые данные
+  if (updatedConfig != null && mounted) {
+    // 3. Обновляем состояние с новыми данными
+    setState(() {
+      _config = updatedConfig; // <- Обновляем _config
+    });
+  }
+}
+
 }

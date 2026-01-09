@@ -74,4 +74,19 @@ class ConfigData {
       );
     }
   }
+
+  Future<Result<AutoMLConfig>> saveAutoMLConfig(AutoMLConfig config) async {
+  try {
+    
+    return Result<AutoMLConfig>(data: config);
+  } catch (e, stackTrace) {
+    _log.severe('Error saving AutoML config: $e', e, stackTrace);
+    return Result<AutoMLConfig>(
+      error: Failure(
+        message: 'Error saving config: $e',
+        stackTrace: stackTrace,
+      ),
+    );
+  }
+}
 }
