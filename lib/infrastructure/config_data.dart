@@ -1,7 +1,5 @@
 import 'package:aro_monitoring/domain/core/error/failure.dart';
 import 'package:aro_monitoring/domain/core/result/result.dart';
-import 'package:aro_monitoring/infrastructure/api_address.dart';
-import 'package:aro_monitoring/infrastructure/api_request.dart';
 import 'package:aro_monitoring/infrastructure/api_query_type/fast_api_query.dart';
 import 'package:logging/logging.dart';
 import 'package:aro_monitoring/domain/core/entities/core_entitie.dart';
@@ -43,6 +41,35 @@ class ConfigData {
       );
     }
   }
+
+  Future<Result<AllModelsConfig>> getAllModelsConfig() async {
+    try {
+      _log.fine('Fetching AllModels config from API...');
+      
+       if (!_fastAPIQuery.valid()) {
+        return Result<AllModelsConfig>(
+          error: Failure(
+            message: 'API query validation failed',
+            stackTrace: StackTrace.current,
+          ),
+        );
+      }
+      
+      final models_config = await _fastAPIQuery.getAllModelsDefaultConfig();
+      _log.fine('Config received: ${models_config.project}');
+      
+      return Result<AllModelsConfig>(data: models_config);
+      
+    } catch (e, stackTrace) {
+      _log.severe('Error fetching AutoML config: $e', e, stackTrace);
+      return Result<AllModelsConfig>(
+        error: Failure(
+          message: 'Error fetching config: $e',
+          stackTrace: stackTrace,
+        ),
+      );
+    }
+  }
   
   // Метод all() который возвращает List<Map>
   Future<Result<List<Map<String, dynamic>>>> all() async {
@@ -57,11 +84,12 @@ class ConfigData {
       }
       
       final result = await _fastAPIQuery.getAutoMLDefaultConfig();
-      
-      // Преобразуем AutoMLConfig в List<Map> для совместимости
-      final configMap = result.toJson();
-      final listData = [configMap];
-      
+      final modelConfigResult = await _fastAPIQuery.getAllModelsDefaultConfig();
+
+      final listData = [
+      result.toJson(),
+      modelConfigResult.toJson(),
+      ];
       return Result<List<Map<String, dynamic>>>(data: listData);
       
     } catch (e, stackTrace) {
@@ -82,6 +110,21 @@ class ConfigData {
   } catch (e, stackTrace) {
     _log.severe('Error saving AutoML config: $e', e, stackTrace);
     return Result<AutoMLConfig>(
+      error: Failure(
+        message: 'Error saving config: $e',
+        stackTrace: stackTrace,
+      ),
+    );
+  }
+}
+
+  Future<Result<AllModelsConfig>> saveAllModelsConfig(AllModelsConfig config) async {
+  try {
+    
+    return Result<AllModelsConfig>(data: config);
+  } catch (e, stackTrace) {
+    _log.severe('Error saving AutoML config: $e', e, stackTrace);
+    return Result<AllModelsConfig>(
       error: Failure(
         message: 'Error saving config: $e',
         stackTrace: stackTrace,

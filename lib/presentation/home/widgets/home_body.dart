@@ -1,11 +1,7 @@
-import 'package:aro_monitoring/infrastructure/api_address.dart';
+
 import 'package:aro_monitoring/infrastructure/api_query_type/fast_api_query.dart';
-import 'package:aro_monitoring/infrastructure/dep_objects.dart';
-import 'package:aro_monitoring/infrastructure/do_data.dart';
 import 'package:aro_monitoring/infrastructure/config_data.dart';
-import 'package:aro_monitoring/infrastructure/api_query_type/sql_query.dart';
 import 'package:aro_monitoring/presentation/data/data_page.dart';
-import 'package:aro_monitoring/presentation/monitoring/monitoring_page.dart';
 import 'package:flutter/material.dart';
 import 'package:logging/logging.dart';
 
@@ -36,7 +32,7 @@ class _HomePageState extends State<HomeBody> {
                       context,
                       MaterialPageRoute(builder: (context) => ConfigPage(
                         title: "AutoMLConfig",
-                        configData: ConfigData(fastAPIQuery: FastApiQuery(baseUrl: 'http://127.0.0.1:8000')
+                        configData: ConfigData(fastAPIQuery: FastApiQuery(baseUrl: 'http://127.0.0.1:8000',),
                         ),
                       )),
                     );

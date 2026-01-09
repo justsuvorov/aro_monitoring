@@ -1,8 +1,6 @@
-import 'package:aro_monitoring/infrastructure/api_address.dart';
-import 'package:aro_monitoring/infrastructure/dep_objects.dart';
+
 import 'package:aro_monitoring/infrastructure/do_data.dart';
 import 'package:aro_monitoring/infrastructure/config_data.dart';
-import 'package:aro_monitoring/infrastructure/api_query_type/sql_query.dart';
 import 'package:aro_monitoring/presentation/data/widgets/config_data_body.dart';
 import 'package:aro_monitoring/presentation/data/widgets/data_body.dart';
 import 'package:aro_monitoring/presentation/home/home_page.dart';
@@ -94,8 +92,7 @@ class ConfigPage extends StatelessWidget {
                   MaterialPageRoute(
                     builder: (context) => HomePage(
                       title: 'OutboxML',
-                   
-                    ),
+                      ),
                   ),
                 );
               },

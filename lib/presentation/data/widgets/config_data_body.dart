@@ -16,6 +16,11 @@ import 'package:responsive_table/responsive_table.dart';
 import 'package:aro_monitoring/domain/core/entities/core_entitie.dart';
 
 
+enum ConfigViewMode {
+  autoML,
+  allModels,
+}
+
 ///
 class ConfigDataBody extends StatefulWidget {
   final ConfigData configData;
@@ -31,9 +36,10 @@ class ConfigDataBody extends StatefulWidget {
 
 class _ConfigDataBodyState extends State<ConfigDataBody> {
   AutoMLConfig? _config;
+  AllModelsConfig? _allModelsConfig;
   bool _isLoading = false;
   String? _error;
-  
+  ConfigViewMode _currentMode = ConfigViewMode.autoML;
   @override
   void initState() {
     super.initState();
@@ -47,12 +53,30 @@ class _ConfigDataBodyState extends State<ConfigDataBody> {
     });
     
     final result = await widget.configData.getAutoMLConfig();
-    
+    final result2 = await widget.configData.getAllModelsConfig();
     result.fold(
       onData: (config) {
         if (mounted) {
           setState(() {
             _config = config;
+            _isLoading = false;
+          });
+        }
+      },
+      onError: (error) {
+        if (mounted) {
+          setState(() {
+            _error = error.message;
+            _isLoading = false;
+          });
+        }
+      },
+    );
+    result2.fold(
+      onData: (config) {
+        if (mounted) {
+          setState(() {
+            _allModelsConfig = config;
             _isLoading = false;
           });
         }
@@ -97,8 +121,133 @@ class _ConfigDataBodyState extends State<ConfigDataBody> {
       return const Center(child: Text('Нет данных конфигурации'));
     }
     
-    return _buildCompactConfigForm(_config!);
+    return _buildCombinedViewWithToggle();//_buildCompactAllModelsConfigForm(_allModelsConfig!);
   }
+  Widget _buildCombinedViewWithToggle() {
+  // Определяем начальный режим на основе типа конфигурации
+  
+  
+  return Column(
+    children: [
+      // Панель переключения
+      Container(
+        padding: const EdgeInsets.all(12),
+        decoration: BoxDecoration(
+          color: Colors.grey[50],
+          border: Border(
+            bottom: BorderSide(color: const Color.fromARGB(255, 221, 174, 174)),
+          ),
+        ),
+        child: Row(
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: [
+            // Переключатель
+            Container(
+              decoration: BoxDecoration(
+                color: Colors.white,
+                borderRadius: BorderRadius.circular(20),
+                border: Border.all(color: const Color.fromARGB(255, 231, 182, 182)),
+                boxShadow: [
+                  BoxShadow(
+                    color: Colors.black.withOpacity(0.05),
+                    blurRadius: 4,
+                    offset: const Offset(0, 2),
+                  ),
+                ],
+              ),
+              child: StatefulBuilder(
+                builder: (context, setState) {
+                  return Row(
+                    mainAxisSize: MainAxisSize.min,
+                    children: [
+                      // Кнопка AutoML
+                      _buildToggleButton(
+                        'AutoML',
+                        ConfigViewMode.autoML,
+                      ),
+                      
+                      // Кнопка All Models
+                      _buildToggleButton(
+                        'Models Config',
+                        ConfigViewMode.allModels,
+                      ),
+                    ],
+                  );
+                },
+              ),
+            ),
+            
+         
+          ],
+        ),
+      ),
+      
+      // Контент в зависимости от выбранного режима
+      Expanded(
+        child: AnimatedSwitcher(
+          duration: const Duration(milliseconds: 300),
+          child: _currentMode == ConfigViewMode.autoML
+              ? _buildCompactConfigForm(_config!)
+              : _buildCompactAllModelsConfigForm(_allModelsConfig!),
+        ),
+      ),
+    ],
+  );
+}
+
+Widget _buildToggleButton(
+    String label,
+    ConfigViewMode mode,
+  ) {
+    final isActive = _currentMode == mode;
+    final color = mode == ConfigViewMode.autoML ? Colors.blue : Colors.green;
+    final icon = mode == ConfigViewMode.autoML 
+        ? Icons.auto_awesome 
+        : Icons.list_alt;
+    
+    return Container(
+      decoration: BoxDecoration(
+        color: isActive ? color : Colors.transparent,
+        borderRadius: BorderRadius.circular(20),
+      ),
+      child: Material(
+        color: Colors.transparent,
+        child: InkWell(
+          borderRadius: BorderRadius.circular(20),
+          onTap: () {
+            if (_currentMode != mode) {
+              setState(() {
+                _currentMode = mode;
+              });
+            }
+          },
+          child: Padding(
+            padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 10),
+            child: Row(
+              children: [
+                Icon(
+                  icon,
+                  size: 18,
+                  color: isActive ? Colors.white : Colors.grey[700],
+                ),
+                const SizedBox(width: 6),
+                Text(
+                  label,
+                  style: TextStyle(
+                    fontSize: 14,
+                    fontWeight: FontWeight.w500,
+                    color: isActive ? Colors.white : Colors.grey[700],
+                  ),
+                ),
+              ],
+            ),
+          ),
+        ),
+      ),
+    );
+  }
+ 
+   
   
 Widget _buildCompactConfigForm(AutoMLConfig config) {
   final fs = config.featureSelection;
@@ -152,7 +301,7 @@ Widget _buildCompactConfigForm(AutoMLConfig config) {
         
         const SizedBox(height: 24),
         
-        // Кнопки
+ 
         Row(
           children: [
             Expanded(
@@ -170,10 +319,10 @@ Widget _buildCompactConfigForm(AutoMLConfig config) {
                 child: const Text('Редактировать'),
               ),
                 ),
-              ]
+              ],
             ),
-      ]
-    )
+      ],
+    ),
   );
 }
 
@@ -297,5 +446,234 @@ void _openEditor() async {
     });
   }
 }
+
+
+Widget _buildCompactAllModelsConfigForm(AllModelsConfig config) {
+  final dataConfig = config.dataConfig;
+  final modelConfig = config.modelsConfigs;
+  
+  return SingleChildScrollView(
+    padding: const EdgeInsets.all(16.0),
+    child: Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: [
+        const Text(
+          'Models Configuration',
+          style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
+        ),
+        const SizedBox(height: 16),
+        
+        // Основная информация
+        _buildSectionTitle('Основная информация'),
+        _buildInfoRow('Группа моделей', config.groupName),
+        _buildInfoRow('Проект', config.project),
+        _buildInfoRow('Версия', config.version),
+
+        const SizedBox(height: 16),
+  
+        // Конфигурация данных
+        if (dataConfig != null) ...[
+          _buildSectionTitle('Конфигурация данных'),
+          _buildInfoRow('Источник данных', dataConfig.source ?? '—'),
+          _buildInfoRow('Имя таблицы', dataConfig.tableNameSource ?? ''),
+          _buildInfoRow('Путь к локальному файлу', dataConfig.localNameSource ?? '—'),
+        
+          if (dataConfig.extraColumns != null && dataConfig.extraColumns!.isNotEmpty)
+            _buildInfoRow('Дополнительные поля', dataConfig.extraColumns!.join(', ')),
+          
+          if (dataConfig.separation != null) ...[
+            const SizedBox(height: 8),
+            _buildInfoRow('Разделение на тестовую и обучающую выборку', dataConfig.separation!.kind),
+            if (dataConfig.separation!.randomState != null)
+              _buildInfoRow('Random State', '${dataConfig.separation!.randomState}'),
+            if (dataConfig.separation!.testTrainProportion != null)
+              _buildInfoRow('Test/Train proportion', dataConfig.separation!.testTrainProportion!.toStringAsFixed(2)),
+          ],
+        ],
+        
+        const SizedBox(height: 16),
+        
+        // Сводка по моделям
+        _buildSectionTitle('Конфигурация моделей'),
+        const SizedBox(height: 16),
+        
+        // Кнопки
+        Row(
+          children: [
+            Expanded(
+              child: ElevatedButton(
+                onPressed: () => _showAllModelsJsonPreview(config),
+                child: const Text('Показать JSON'),
+              ),
+            ),
+            const SizedBox(width: 8),
+            Expanded(
+              child: ElevatedButton(
+                onPressed: () {},//=> _openAllModelsEditor(config),
+                style: ElevatedButton.styleFrom(
+                  backgroundColor: Colors.blue,
+                ),
+                child: const Text('Редактировать'),
+              ),
+            ),
+          ],
+        ),
+        
+       
+      ],
+    ),
+  );
+}
+
+
+
+void _showAllModelsJsonPreview(AllModelsConfig config) {
+  showDialog(
+    context: context,
+    builder: (context) => AlertDialog(
+      title: const Text('AllModels Config JSON'),
+      content: SizedBox(
+        width: double.maxFinite,
+        child: SingleChildScrollView(
+          child: SelectableText(
+            JsonEncoder.withIndent('  ').convert(config.toJson()),
+            style: const TextStyle(fontFamily: 'monospace', fontSize: 12),
+          ),
+        ),
+      ),
+      actions: [
+        TextButton(
+          onPressed: () => Navigator.pop(context),
+          child: const Text('Закрыть'),
+        ),
+       
+      ],
+    ),
+  );
+}
+
+void _openAllModelsEditor(AutoMLConfig config) async {
+  final updatedConfig = await Navigator.push<AllModelsConfig?>(
+    context,
+    MaterialPageRoute(
+      builder: (context) => AutoMLConfigEditor(
+        initialConfig: config,
+      ),
+    ),
+  );
+  
+  if (updatedConfig != null && mounted) {
+    setState(() {
+      //_allModelsConfig = updatedConfig;
+    });
+  }
+}
+
+
+void _showModelsTable(AllModelsConfig config) {
+  showModalBottomSheet(
+    context: context,
+    isScrollControlled: true,
+    builder: (context) => SizedBox(
+      height: MediaQuery.of(context).size.height * 0.8,
+      child: Column(
+        children: [
+          Padding(
+            padding: const EdgeInsets.all(16),
+            child: Row(
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              children: [
+                const Text(
+                  'Список моделей',
+                  style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
+                ),
+                IconButton(
+                  onPressed: () => Navigator.pop(context),
+                  icon: const Icon(Icons.close),
+                ),
+              ],
+            ),
+          ),
+          Expanded(
+            child: SingleChildScrollView(
+              child: DataTable(
+                columns: const [
+                  DataColumn(label: Text('Название')),
+                  DataColumn(label: Text('Цель')),
+                  DataColumn(label: Text('Фичи')),
+                  DataColumn(label: Text('Тип')),
+                ],
+                rows: config.modelsConfigs.map((model) {
+                  String modelType = 'Custom';
+                  if (model.paramsCatboost != null) modelType = 'CatBoost';
+                  if (model.paramsXgb != null) modelType = 'XGBoost';
+                  if (model.paramsGlm != null) modelType = 'GLM';
+                  
+                  return DataRow(
+                    cells: [
+                      DataCell(Text(model.name)),
+                      DataCell(Text(model.objective ?? '—')),
+                      DataCell(Text('${model.features.length}')),
+                      DataCell(Text(modelType)),
+                    ],
+                    onSelectChanged: (_) {
+                      _showModelDetails(model);
+                    },
+                  );
+                }).toList(),
+              ),
+            ),
+          ),
+        ],
+      ),
+    ),
+  );
+}
+
+void _showModelDetails(ModelConfig model) {
+  showDialog(
+    context: context,
+    builder: (context) => AlertDialog(
+      title: Text('Модель: ${model.name}'),
+      content: SizedBox(
+        width: double.maxFinite,
+        child: SingleChildScrollView(
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            mainAxisSize: MainAxisSize.min,
+            children: [
+              _buildInfoRow('Цель', model.objective ?? '—'),
+              _buildInfoRow('Обертка', model.wrapper ?? '—'),
+              _buildInfoRow('Целевая колонка', model.columnTarget ?? '—'),
+              _buildInfoRow('Колонка экспозиции', model.columnExposure ?? '—'),
+              _buildInfoRow('Количество фичей', '${model.features.length}'),
+              _buildInfoRow('Относительные фичи', '${model.relativeFeatures.length}'),
+              
+              const SizedBox(height: 16),
+              if (model.paramsCatboost != null) ...[
+                const Text('Параметры CatBoost:', style: TextStyle(fontWeight: FontWeight.bold)),
+                ...model.paramsCatboost!.entries.take(5).map((e) => 
+                  Text('  ${e.key}: ${e.value}')),
+              ],
+              
+              if (model.catFeaturesCatboost != null) ...[
+                const SizedBox(height: 8),
+                Text('Категориальные фичи: ${model.catFeaturesCatboost!.join(', ')}'),
+              ],
+            ],
+          ),
+        ),
+      ),
+      actions: [
+        TextButton(
+          onPressed: () => Navigator.pop(context),
+          child: const Text('Закрыть'),
+        ),
+      ],
+    ),
+  );
+}
+
+
 
 }

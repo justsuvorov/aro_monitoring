@@ -64,4 +64,23 @@ class FastApiQuery implements ApiQueryType {
       throw Exception('Network error: $e');
     }
   }
+Future<AllModelsConfig> getAllModelsDefaultConfig() async {    
+    try {
+      
+      final response = await http.post(
+        Uri.parse('$_baseUrl/api/default_all_models_config'),
+        headers: {'Content-Type': 'application/json'},
+      );
+      
+      if (response.statusCode == 200) {
+        final jsonData = jsonDecode(response.body);
+        return AllModelsConfig.fromJson(jsonData);
+      } else {
+        throw Exception('Failed to load default config: ${response.statusCode}');
+      }
+    } catch (e) {
+      throw Exception('Network error: $e');
+    }
+  }
+
 }

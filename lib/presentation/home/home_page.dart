@@ -1,4 +1,4 @@
-import 'package:aro_monitoring/infrastructure/dep_objects.dart';
+
 import 'package:aro_monitoring/presentation/home/widgets/home_body.dart';
 import 'package:flutter/material.dart';
 
@@ -26,8 +26,7 @@ class HomePage extends StatelessWidget {
         ),
         // actions: [],
       ),
-      body: HomeBody(
-      ),
+      body: HomeBody(),
       backgroundColor: const Color.fromARGB(255, 28, 33, 37),
     );
   }

@@ -130,25 +130,7 @@ class _DataPageState extends State<DataBody> {
     setState(() => _isLoading = false);
   }
 
-  _updateDbTable() {
-    // TODO this field names must be implemented in the sql-speacing object (DoData) 
-    List fieldNames = ['activity', 'comment', 'date_planning', 'date_fact', 'responsible_person', 'obj_status', 'failure'];
-    for (final i in _source) {
-      String id = i['id'];
-      for (String fieldName in fieldNames) {
-        String value = i[fieldName];
-        _doData.update(
-          id,
-          fieldName,
-          value,
-        );
-        // TODO following lines to be deleted because this functional wath moved in to the update method of the DoData class
-        // TODO this SQL must be implemented in the sql-speacking object (DoData) 
-        // String sqlQuery = 'UPDATE do_data SET \'$column\' = \'$str\' WHERE id = $id';
-        // _doData.loadToDb(sqlQuery);
-      }
-    }
-  }
+ 
 
   @override
   void initState() {
@@ -191,7 +173,6 @@ class _DataPageState extends State<DataBody> {
                       .then((result) {
                         result.fold(
                           onData:(_) {
-                            _updateDbTable();
                           },
                           onError: (error) {
                             // TODO Show error dialog or somthing
