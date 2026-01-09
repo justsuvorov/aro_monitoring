@@ -6,7 +6,6 @@ import 'package:flutter/material.dart';
 
 class MyApp extends StatelessWidget {
   const MyApp({super.key});
-
   // This widget is the root of your application.
   @override
   Widget build(BuildContext context) {
@@ -18,15 +17,7 @@ class MyApp extends StatelessWidget {
         visualDensity: VisualDensity.adaptivePlatformDensity,
       ),
       home: HomePage(
-        title: 'OutboxML',
-        depObjects: DepObjects(
-          address: ApiAddress.localhost(),
-          sqlQuery: SqlQuery(
-            authToken: 'auth-token-test',
-            database: 'database',
-            sql: 'SELECT * FROM `dep_objects`;',
-          ),
-        ),
+        title: 'OutboxML'
       ),
     );
   }

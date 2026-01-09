@@ -10,58 +10,25 @@ import 'package:flutter/material.dart';
 import 'package:logging/logging.dart';
 
 class HomeBody extends StatefulWidget {
-  final DepObjects depObjects;
   ///
   const HomeBody({
     super.key, 
-    required this.depObjects,
   });
   ///
   @override
   State<HomeBody> createState() => _HomePageState(
-    depObjects: depObjects,
   );
 }
 
 ///
 class _HomePageState extends State<HomeBody> {
   final log = Logger('_HomePageState');
-  final DepObjects _depObjects;
-  static const _dropdownEmptyValue = 'По всем';
-  final List<String> _depList = [_dropdownEmptyValue];
-  int dropdownValue = 0;
   bool _isLoading = false;
-  ///
-  _HomePageState({
-    required DepObjects depObjects,
-  }) : 
-    _depObjects = depObjects;
   ///
   @override
   void initState() {
     super.initState();
-    _isLoading = true;
-    _depObjects.all().then((result) {
-      result.fold(
-        onData: (depList) {
-          if (depList.isNotEmpty) {
-            _depList.clear();
-            _depList.add(_dropdownEmptyValue);
-            _depList.addAll(depList);
-            dropdownValue = 0;
-          }
-        }, 
-        onError: (
-          (error) {
-            log.warning('._initializeData | error: $error');
-          }
-        ),
-      );
-    }).whenComplete(() {
-      if (mounted) {
-        setState(() => _isLoading = false);
-      }
-    });
+    _isLoading = false;
   }
   ///
   void _updateButtonClick() {

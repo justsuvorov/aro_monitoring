@@ -4,15 +4,12 @@ import 'package:flutter/material.dart';
 
 class HomePage extends StatelessWidget {
   final String _title;
-  final DepObjects _depObjects;
   ///
   const HomePage({
     super.key, 
     required String title,
-    required DepObjects depObjects,
   }) : 
-    _title = title, 
-    _depObjects = depObjects;
+    _title = title;
   ///
   @override
   Widget build(BuildContext context) {
@@ -30,7 +27,6 @@ class HomePage extends StatelessWidget {
         // actions: [],
       ),
       body: HomeBody(
-        depObjects: _depObjects,
       ),
       backgroundColor: const Color.fromARGB(255, 28, 33, 37),
     );

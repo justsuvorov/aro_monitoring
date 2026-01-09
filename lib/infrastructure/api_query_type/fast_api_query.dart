@@ -46,54 +46,7 @@ class FastApiQuery implements ApiQueryType {
   @override
   String get id => _id;
 
-  Future<AutoMLConfig> getAutoMLDefaultConfig() async {
-     try {
-    final response = await http.post(
-      Uri.parse('$_baseUrl/api/default_automl_config'),
-      headers: {'Content-Type': 'application/json'},
-    );
-    
-    if (response.statusCode == 200) {
-      final jsonData = jsonDecode(response.body);
-      
-      // ДЕТАЛЬНАЯ ОТЛАДКА
-      print('🔍 DEBUG - Checking problematic fields:');
-      
-      // Проверяем ВСЕ числовые поля
-      final featureSelection = jsonData['feature_selection'] as Map? ?? {};
-      print('📊 Feature Selection fields:');
-      for (final key in featureSelection.keys) {
-        final value = featureSelection[key];
-        print('  $key: $value (type: ${value.runtimeType})');
-      }
-      
-      // Проверяем hp_tune
-      final hpTune = jsonData['hp_tune'] as Map? ?? {};
-      print('📊 HP Tune fields:');
-      for (final key in hpTune.keys) {
-        final value = hpTune[key];
-        print('  $key: $value (type: ${value.runtimeType})');
-      }
-      
-      // Проверяем inference_criteria
-      final inference = jsonData['inference_criteria'] as Map? ?? {};
-      print('📊 Inference fields:');
-      for (final key in inference.keys) {
-        final value = inference[key];
-        print('  $key: $value (type: ${value.runtimeType})');
-      }
-      
-      return AutoMLConfig.fromJson(jsonData);
-    } else {
-      throw Exception('HTTP ${response.statusCode}');
-    }
-  } catch (e, stackTrace) {
-    print('❌ CRITICAL ERROR: $e');
-    print('📝 Stack trace: $stackTrace');
-    rethrow;
-  }
-    
-    
+  Future<AutoMLConfig> getAutoMLDefaultConfig() async {    
     try {
       
       final response = await http.post(

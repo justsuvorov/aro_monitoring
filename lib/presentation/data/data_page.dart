@@ -39,15 +39,7 @@ class DataPage extends StatelessWidget {
                   context,
                   MaterialPageRoute(
                     builder: (context) => HomePage(
-                      title: 'OutboxML',
-                      depObjects: DepObjects(
-                        address: ApiAddress.localhost(),
-                        sqlQuery: SqlQuery(
-                          authToken: 'auth-token-test',
-                          database: 'database',
-                          sql: 'SELECT * FROM dep_objects;',
-                        ),
-                      ),
+                      title: 'OutboxML'
                     ),
                   ),
                 );
@@ -102,14 +94,7 @@ class ConfigPage extends StatelessWidget {
                   MaterialPageRoute(
                     builder: (context) => HomePage(
                       title: 'OutboxML',
-                      depObjects: DepObjects(
-                        address: ApiAddress.localhost(),
-                        sqlQuery: SqlQuery(
-                          authToken: 'auth-token-test',
-                          database: 'database',
-                          sql: 'SELECT * FROM dep_objects;',
-                        ),
-                      ),
+                   
                     ),
                   ),
                 );
