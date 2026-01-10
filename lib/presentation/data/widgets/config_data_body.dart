@@ -140,6 +140,7 @@ class _ConfigDataBodyState extends State<ConfigDataBody> {
                 : CompactAllModelsConfigForm(
                     config: _allModelsConfig!,
                     onShowJson: () => ConfigJsonPreview.showAllModelsJsonPreview(context, _allModelsConfig!),
+                    onEdit: _openModelEditor,
                   ),
           ),
         ),
@@ -164,6 +165,25 @@ void _openEditor() async {
     });
   }
 }
+void _openModelEditor() async {
+  final updatedConfig = await Navigator.push<AllModelsConfig?>(
+    context,
+    MaterialPageRoute(
+      builder: (context) => AllModelsConfigEditor(
+        initialConfig: _allModelsConfig!,
+      ),
+    ),
+  );
+  
+  // 2. Проверяем, вернулись ли новые данные
+  if (updatedConfig != null && mounted) {
+    // 3. Обновляем состояние с новыми данными
+    setState(() {
+      _allModelsConfig = updatedConfig; // <- Обновляем _config
+    });
+  }
+}
+
 
 
 

@@ -78,3 +78,113 @@ Widget buildInfoCard(String title, String value) {
     ),
   );
 }
+
+  Widget buildNumberField({
+    required String label,
+    required int value,
+    required Function(int) onChanged,
+  }) {
+    return TextFormField(
+      initialValue: value.toString(),
+      decoration: InputDecoration(
+        labelText: label,
+        border: const OutlineInputBorder(),
+      ),
+      keyboardType: TextInputType.number,
+      onChanged: (text) {
+        if (text.isNotEmpty) {
+          onChanged(int.tryParse(text) ?? value);
+        }
+      },
+    );
+  }
+  
+  Widget buildDoubleField({
+    required String label,
+    required double value,
+    required Function(double) onChanged,
+  }) {
+    return TextFormField(
+      initialValue: value.toString(),
+      decoration: InputDecoration(
+        labelText: label,
+        border: const OutlineInputBorder(),
+      ),
+      keyboardType: TextInputType.number,
+      onChanged: (text) {
+        if (text.isNotEmpty) {
+          onChanged(double.tryParse(text) ?? value);
+        }
+      },
+    );
+  }
+
+Widget buildSliderWithValue({
+    required String label,
+    required double value,
+    required double min,
+    required double max,
+    required int divisions,
+    required Function(double) onChanged,
+  }) {
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: [
+        Text(
+          '$label: ${value.toInt()}',
+          style: const TextStyle(fontWeight: FontWeight.w500),
+        ),
+        const SizedBox(height: 8),
+        Slider(
+          value: value,
+          min: min,
+          max: max,
+          divisions: divisions,
+          label: value.toInt().toString(),
+          onChanged: onChanged,
+        ),
+        Row(
+          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+          children: [
+            Text(min.toInt().toString()),
+            Text(max.toInt().toString()),
+          ],
+        ),
+      ],
+    );
+  }
+  
+  Widget buildDoubleSliderWithValue({
+    required String label,
+    required double value,
+    required double min,
+    required double max,
+    required int divisions,
+    required Function(double) onChanged,
+  }) {
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: [
+        Text(
+          '$label: ${value.toStringAsFixed(3)}',
+          style: const TextStyle(fontWeight: FontWeight.w500),
+        ),
+        const SizedBox(height: 8),
+        Slider(
+          value: value,
+          min: min,
+          max: max,
+          divisions: divisions,
+          label: value.toStringAsFixed(3),
+          onChanged: onChanged,
+        ),
+        Row(
+          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+          children: [
+            Text(min.toStringAsFixed(1)),
+            Text(max.toStringAsFixed(1)),
+          ],
+        ),
+      ],
+    );
+  }
